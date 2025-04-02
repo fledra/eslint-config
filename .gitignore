@@ -1,0 +1,18 @@
+# dependencies
+node_modules
+
+# built files
+.data
+.cache
+.eslint-config-inspector
+dist
+src/typegen.d.ts
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
