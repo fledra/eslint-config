@@ -10,5 +10,6 @@
 
     "types": ["vitest/globals"]
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts"],
+  "exclude": ["./fixtures/**/*"]
 }
