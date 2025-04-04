@@ -6,7 +6,7 @@ import type { ResolvableFlatConfig } from 'eslint-flat-config-utils';
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import { isPackageExists } from 'local-pkg';
 
-import { comments, gitignore, ignores, imports, javascript, node, stylistic, typescript } from './configs';
+import { comments, disables, gitignore, ignores, imports, javascript, node, stylistic, typescript } from './configs';
 
 export function resolveSubOptions<K extends keyof ConfigOptions>(options: ConfigOptions, key: K) {
   if (typeof options[key] === 'boolean' || !options[key])
@@ -82,6 +82,8 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
       }),
     );
   }
+
+  configs.push(disables());
 
   let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>();
   composer = composer.append(...configs, ...otherConfigs);

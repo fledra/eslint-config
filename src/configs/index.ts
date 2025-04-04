@@ -1,4 +1,5 @@
 export * from './comments';
+export * from './disables';
 export * from './gitignore';
 export * from './ignores';
 export * from './imports';
