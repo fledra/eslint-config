@@ -1,4 +1,5 @@
 import type { TypedFlatConfigItem } from '../types';
+
 import pluginJsdoc from 'eslint-plugin-jsdoc';
 
 export function jsdoc(stylistic = true): TypedFlatConfigItem {

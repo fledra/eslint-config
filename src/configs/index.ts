@@ -6,6 +6,7 @@ export * from './imports';
 export * from './javascript';
 export * from './jsdoc';
 export * from './node';
+export * from './perfectionist';
 export * from './stylistic';
 export * from './typescript';
 export * from './unicorn';

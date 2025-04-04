@@ -1,10 +1,11 @@
+import type { ConfigOptions } from '../src';
+
+import { exec } from 'node:child_process';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
-import { afterAll, beforeAll, it } from 'vitest';
 
-import type { ConfigOptions } from '../src';
+import { afterAll, beforeAll, it } from 'vitest';
 
 beforeAll(async () => {
   await fs.rm(path.resolve('test', '_fixtures'), { recursive: true, force: true });

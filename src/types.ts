@@ -1,8 +1,9 @@
-import type { Linter } from 'eslint';
-import type { ParserOptions } from '@typescript-eslint/parser';
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
-import type { RuleOptions } from './typegen';
+import type { ParserOptions } from '@typescript-eslint/parser';
+import type { Linter } from 'eslint';
+
 import type { FlatGitignoreOptions } from './configs';
+import type { RuleOptions } from './typegen';
 
 export type Awaitable<T> = T | Promise<T>;
 

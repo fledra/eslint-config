@@ -1,12 +1,13 @@
 import type { Linter } from 'eslint';
+import type { ResolvableFlatConfig } from 'eslint-flat-config-utils';
+
 import type { ConfigNames, RuleOptions } from './typegen';
 import type { Awaitable, ConfigOptions, ResolvedOptions, TypedFlatConfigItem } from './types';
-import type { ResolvableFlatConfig } from 'eslint-flat-config-utils';
 
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import { isPackageExists } from 'local-pkg';
 
-import { comments, disables, gitignore, ignores, imports, javascript, node, stylistic, typescript, unicorn } from './configs';
+import { comments, disables, gitignore, ignores, imports, javascript, node, perfectionist, stylistic, typescript, unicorn } from './configs';
 import { jsdoc } from './configs/jsdoc';
 
 export function resolveSubOptions<K extends keyof ConfigOptions>(options: ConfigOptions, key: K) {
@@ -65,6 +66,7 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     node(),
     jsdoc(!!stylisticOptions),
     imports(!!stylisticOptions),
+    perfectionist(),
   );
 
   if (enableUnicorn) {

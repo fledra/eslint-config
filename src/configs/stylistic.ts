@@ -1,4 +1,5 @@
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
+
 import type { OptionsOverrides, TypedFlatConfigItem } from '../types';
 
 import pluginStylistic from '@stylistic/eslint-plugin';

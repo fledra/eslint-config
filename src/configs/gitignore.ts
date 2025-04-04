@@ -1,10 +1,11 @@
+import type { TypedFlatConfigItem } from '../types';
+
 import fs from 'node:fs';
-import process from 'node:process';
 import { EOL } from 'node:os';
 import { dirname, join, relative, resolve } from 'node:path';
+import process from 'node:process';
 
 import { findUpSync } from 'find-up-simple';
-import type { TypedFlatConfigItem } from '../types';
 
 export interface FlatGitignoreOptions {
   /**

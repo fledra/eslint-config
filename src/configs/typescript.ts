@@ -1,12 +1,13 @@
 import type {
   OptionsFiles,
   OptionsOverrides,
+  TypedFlatConfigItem,
   TypeScriptParserOptions,
   TypeScriptWithTypesOptions,
-  TypedFlatConfigItem,
 } from '../types';
 
 import process from 'node:process';
+
 import pluginTs from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 
