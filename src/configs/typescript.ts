@@ -1,10 +1,6 @@
-import type {
-  OptionsFiles,
-  OptionsOverrides,
-  TypedFlatConfigItem,
-  TypeScriptParserOptions,
-  TypeScriptWithTypesOptions,
-} from '../types';
+import type { ParserOptions } from '@typescript-eslint/parser';
+
+import type { OptionsComponentExts, OptionsFiles, OptionsOverrides, TypedFlatConfigItem } from '../types';
 
 import process from 'node:process';
 
@@ -13,12 +9,57 @@ import tsParser from '@typescript-eslint/parser';
 
 import { GLOB_MARKDOWN, GLOB_TS, GLOB_TSX } from '../globs';
 
-export function typescript(
-  options: OptionsFiles & OptionsOverrides & TypeScriptWithTypesOptions & TypeScriptParserOptions = {},
-): TypedFlatConfigItem[] {
-  const { overrides = {}, overridesTypeAware = {}, parserOptions = {} } = options;
+export interface TypeScriptWithTypesOptions {
+  /**
+   * When this options is provided, type aware rules will be enabled.
+   * @see https://typescript-eslint.io/linting/typed-linting/
+   */
+  tsconfigPath?: string;
 
-  let files = [GLOB_TS, GLOB_TSX];
+  /**
+   * Override type aware rules.
+   */
+  overridesTypeAware?: TypedFlatConfigItem['rules'];
+}
+
+export interface TypeScriptParserOptions {
+  /**
+   * Additional parser options for TypeScript.
+   */
+  parserOptions?: Partial<ParserOptions>;
+
+  /**
+   * Glob patterns for files that should be type aware.
+   * @default ['**\/*.{ts,tsx}']
+   */
+  filesTypeAware?: string[];
+
+  /**
+   * Glob patterns for files that should not be type aware.
+   * @default ['**\/*.md\/**']
+   */
+  ignoresTypeAware?: string[];
+}
+
+export type TypescriptOptions =
+  | (TypeScriptWithTypesOptions & OptionsOverrides)
+  | (TypeScriptParserOptions & OptionsOverrides);
+
+export function typescript(
+  options: OptionsFiles & OptionsOverrides & OptionsComponentExts & TypeScriptWithTypesOptions & TypeScriptParserOptions = {},
+): TypedFlatConfigItem[] {
+  const {
+    componentExts = [],
+    overrides = {},
+    overridesTypeAware = {},
+    parserOptions = {},
+  } = options;
+
+  let files = [
+    GLOB_TS,
+    GLOB_TSX,
+    ...componentExts.map((ext) => `**/*.${ext}`),
+  ];
 
   if (options.files) {
     files = files.concat(options.files);

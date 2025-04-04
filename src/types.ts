@@ -1,8 +1,7 @@
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
-import type { ParserOptions } from '@typescript-eslint/parser';
 import type { Linter } from 'eslint';
 
-import type { FlatGitignoreOptions } from './configs';
+import type { FlatGitignoreOptions, TypescriptOptions, UnicornOptions, VueOptions } from './configs';
 import type { RuleOptions } from './typegen';
 
 export type Awaitable<T> = T | Promise<T>;
@@ -31,52 +30,17 @@ export interface OptionsFiles {
   files?: string[];
 }
 
-export interface TypeScriptWithTypesOptions {
+export interface OptionsComponentExts {
   /**
-   * When this options is provided, type aware rules will be enabled.
-   * @see https://typescript-eslint.io/linting/typed-linting/
-   */
-  tsconfigPath?: string;
-
-  /**
-   * Override type aware rules.
-   */
-  overridesTypeAware?: TypedFlatConfigItem['rules'];
-}
-
-export interface TypeScriptParserOptions {
-  /**
-   * Additional parser options for TypeScript.
-   */
-  parserOptions?: Partial<ParserOptions>;
-
-  /**
-   * Glob patterns for files that should be type aware.
-   * @default ['**\/*.{ts,tsx}']
-   */
-  filesTypeAware?: string[];
-
-  /**
-   * Glob patterns for files that should not be type aware.
-   * @default ['**\/*.md\/**']
-   */
-  ignoresTypeAware?: string[];
-}
-
-export type TypescriptOptions =
-  | (TypeScriptWithTypesOptions & OptionsOverrides)
-  | (TypeScriptParserOptions & OptionsOverrides);
-
-export interface UnicornOptions {
-  /**
-   * Instead of cherry-picked rules, include all rules recommended by `eslint-plugin-unicorn`
+   * Additional extensions for components.
    *
-   * @default false
+   * @example ['vue']
+   * @default []
    */
-  recommended?: boolean;
+  componentExts?: string[];
 }
 
-export interface ConfigOptions extends TypedFlatConfigItem {
+export interface ConfigOptions extends TypedFlatConfigItem, OptionsComponentExts {
 
   /**
    * Enable gitignore support.
@@ -109,6 +73,13 @@ export interface ConfigOptions extends TypedFlatConfigItem {
    * @default false
    */
   jsx?: boolean;
+
+  /**
+   * Enable Vue support.
+   *
+   * @default auto-detect based on the dependencies
+   */
+  vue?: boolean | VueOptions;
 
   /**
    * Options for eslint-plugin-unicorn.

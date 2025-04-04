@@ -11,3 +11,4 @@ export * from './perfectionist';
 export * from './stylistic';
 export * from './typescript';
 export * from './unicorn';
+export * from './vue';

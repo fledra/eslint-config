@@ -1,6 +1,15 @@
-import type { TypedFlatConfigItem, UnicornOptions } from '../types';
+import type { TypedFlatConfigItem } from '../types';
 
 import pluginUnicorn from 'eslint-plugin-unicorn';
+
+export interface UnicornOptions {
+  /**
+   * Instead of cherry-picked rules, include all rules recommended by `eslint-plugin-unicorn`
+   *
+   * @default false
+   */
+  recommended?: boolean;
+}
 
 export function unicorn(options: UnicornOptions = {}): TypedFlatConfigItem {
   const { recommended } = options;

@@ -7,8 +7,10 @@ import type { Awaitable, ConfigOptions, ResolvedOptions, TypedFlatConfigItem } f
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import { isPackageExists } from 'local-pkg';
 
-import { comments, disables, gitignore, ignores, imports, javascript, jsonc, node, perfectionist, stylistic, typescript, unicorn } from './configs';
+import { comments, disables, gitignore, ignores, imports, javascript, jsonc, node, perfectionist, stylistic, typescript, unicorn, vue } from './configs';
 import { jsdoc } from './configs/jsdoc';
+
+const VuePackages = ['vue', 'nuxt'];
 
 export function resolveSubOptions<K extends keyof ConfigOptions>(options: ConfigOptions, key: K) {
   if (typeof options[key] === 'boolean' || !options[key])
@@ -32,12 +34,14 @@ export function getOverrides<K extends keyof ConfigOptions>(
 
 export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableFlatConfig<TypedFlatConfigItem>[]) {
   const {
+    componentExts = [],
     ignores: optionsIgnores,
     gitignore: enableGitignore = true,
     jsx: enableJsx = false,
     jsonc: enableJSONC = true,
     unicorn: enableUnicorn = true,
     typescript: enableTypescript = isPackageExists('typescript'),
+    vue: enableVue = VuePackages.some((p) => isPackageExists(p)),
   } = options;
 
   const configs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[] = [];
@@ -50,6 +54,10 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
 
   if (stylisticOptions && !('jsx' in stylisticOptions)) {
     stylisticOptions.jsx = enableJsx;
+  }
+
+  if (enableVue) {
+    componentExts.push('vue');
   }
 
   if (enableGitignore) {
@@ -89,9 +97,20 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     configs.push(
       typescript({
         ...typescriptOptions,
+        componentExts: Array.from(new Set(componentExts)),
         overrides: getOverrides(options, 'typescript'),
       }),
     );
+  }
+
+  if (enableVue) {
+    const vueOptions = resolveSubOptions(options, 'vue');
+    configs.push(vue({
+      ...vueOptions,
+      overrides: getOverrides(options, 'vue'),
+      stylistic: stylisticOptions,
+      typescript: !!enableTypescript,
+    }));
   }
 
   if (enableJSONC) {

@@ -17,6 +17,12 @@ afterAll(async () => {
 
 runWithConfig('default', {});
 
+runWithConfig('all', {
+  jsonc: true,
+  typescript: true,
+  vue: true,
+});
+
 async function runWithConfig(name: string, config?: ConfigOptions) {
   it.concurrent(name, async ({ expect }) => {
     const input = path.resolve('test', 'fixtures', 'input');
