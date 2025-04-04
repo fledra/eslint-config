@@ -118,6 +118,13 @@ export interface ConfigOptions extends TypedFlatConfigItem {
   unicorn?: boolean | UnicornOptions;
 
   /**
+   * Enable JSONC support.
+   *
+   * @default true
+   */
+  jsonc?: boolean | OptionsOverrides;
+
+  /**
    * Enable stylistic rules.
    *
    * @see https://eslint.style/

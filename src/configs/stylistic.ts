@@ -5,7 +5,7 @@ import type { OptionsOverrides, TypedFlatConfigItem } from '../types';
 import pluginStylistic from '@stylistic/eslint-plugin';
 import pluginAntfu from 'eslint-plugin-antfu';
 
-const defaultOptions: StylisticCustomizeOptions = {
+export const defaultStylisticOptions: StylisticCustomizeOptions = {
   indent: 2,
   semi: true,
   jsx: false,
@@ -28,7 +28,7 @@ export function stylistic(options: StylisticCustomizeOptions & OptionsOverrides 
     braceStyle,
     overrides = {},
   } = {
-    ...defaultOptions,
+    ...defaultStylisticOptions,
     ...options,
   };
 
@@ -62,6 +62,7 @@ export function stylistic(options: StylisticCustomizeOptions & OptionsOverrides 
       'style/padded-blocks': ['error', 'never'],
       'style/object-curly-spacing': ['error', 'always'],
       'style/no-multi-spaces': ['error', { exceptions: { Property: false } }],
+      'style/object-curly-newline': ['error', { consistent: true, multiline: true }],
       'style/object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],
 
       'antfu/consistent-chaining': 'error',

@@ -7,7 +7,7 @@ import type { Awaitable, ConfigOptions, ResolvedOptions, TypedFlatConfigItem } f
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import { isPackageExists } from 'local-pkg';
 
-import { comments, disables, gitignore, ignores, imports, javascript, node, perfectionist, stylistic, typescript, unicorn } from './configs';
+import { comments, disables, gitignore, ignores, imports, javascript, jsonc, node, perfectionist, stylistic, typescript, unicorn } from './configs';
 import { jsdoc } from './configs/jsdoc';
 
 export function resolveSubOptions<K extends keyof ConfigOptions>(options: ConfigOptions, key: K) {
@@ -35,6 +35,7 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     ignores: optionsIgnores,
     gitignore: enableGitignore = true,
     jsx: enableJsx = false,
+    jsonc: enableJSONC = true,
     unicorn: enableUnicorn = true,
     typescript: enableTypescript = isPackageExists('typescript'),
   } = options;
@@ -90,6 +91,17 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
         ...typescriptOptions,
         overrides: getOverrides(options, 'typescript'),
       }),
+    );
+  }
+
+  if (enableJSONC) {
+    configs.push(
+      jsonc({
+        overrides: getOverrides(options, 'jsonc'),
+        stylistic: stylisticOptions,
+      }),
+      // sortPackageJson(),
+      // sortTsconfig(),
     );
   }
 

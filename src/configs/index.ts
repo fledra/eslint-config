@@ -5,6 +5,7 @@ export * from './ignores';
 export * from './imports';
 export * from './javascript';
 export * from './jsdoc';
+export * from './jsonc';
 export * from './node';
 export * from './perfectionist';
 export * from './stylistic';
