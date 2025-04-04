@@ -4,7 +4,7 @@ import { flatConfigsToRulesDTS } from 'eslint-typegen/core';
 import { builtinRules } from 'eslint/use-at-your-own-risk';
 
 import type { Awaitable, TypedFlatConfigItem } from '../src/types';
-import { comments, javascript, node, typescript, stylistic, ignores, imports, disables, jsdoc } from '../src';
+import { comments, javascript, node, typescript, stylistic, ignores, imports, disables, jsdoc, unicorn } from '../src';
 
 // Combine all configs into a single flat array
 async function combine(...configs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[]) {
@@ -28,6 +28,7 @@ const configs = await combine(
   stylistic(),
   jsdoc(),
   imports(),
+  unicorn(),
   disables(),
 );
 

@@ -104,6 +104,8 @@ export function typescript(
 
         'no-unused-vars': 'off',
         'no-use-before-define': 'off',
+        'unused-imports/no-unused-vars': 'off', // clashes with `@typescript-eslint/no-unused-vars`
+
         '@typescript-eslint/ban-ts-comment': ['error', { 'ts-expect-error': 'allow-with-description' }],
         '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
         '@typescript-eslint/consistent-type-imports': [
@@ -131,9 +133,12 @@ export function typescript(
           },
         ],
         '@typescript-eslint/no-unused-vars': ['error', {
+          args: 'after-used',
           argsIgnorePattern: '^_',
           caughtErrorsIgnorePattern: '^_',
           destructuredArrayIgnorePattern: '^_',
+          vars: 'all',
+          varsIgnorePattern: '^_',
           ignoreRestSiblings: true,
         }],
         '@typescript-eslint/no-use-before-define': ['error', { classes: false, functions: false, variables: true }],

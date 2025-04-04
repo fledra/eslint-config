@@ -36,7 +36,7 @@ export default fledra(${JSON.stringify(config)})
     try {
       const execAsync = promisify(exec);
       await execAsync('eslint . --fix', { cwd: target });
-    } catch (_) {}
+    } catch {}
 
     const files = await fs.readdir(target);
     files.splice(files.findIndex((f) => f === 'eslint.config.ts'), 1);

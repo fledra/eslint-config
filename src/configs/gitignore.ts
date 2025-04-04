@@ -53,7 +53,7 @@ function convertIgnorePatternToMinimatch(pattern: string): string {
 
   const firstIndexOfSlash = patternToTest.indexOf('/');
 
-  const matchEverywherePrefix = firstIndexOfSlash < 0 || firstIndexOfSlash === patternToTest.length - 1 ? '**/' : '';
+  const matchEverywherePrefix = firstIndexOfSlash !== 0 || firstIndexOfSlash === patternToTest.length - 1 ? '**/' : '';
   const patternWithoutLeadingSlash = firstIndexOfSlash === 0 ? patternToTest.slice(1) : patternToTest;
 
   /*
@@ -102,7 +102,7 @@ function relativeMinimatch(pattern: string, relativePath: string, cwd: string) {
   // if glob doesn't match the parent dirs it should be ignored
   const parents = relative(resolve(cwd, relativePath), cwd).split(/[/\\]/);
 
-  while (parents.length && cleanPattern.startsWith(`${parents[0]}/`)) {
+  while (parents.length > 0 && cleanPattern.startsWith(`${parents[0]}/`)) {
     cleanPattern = cleanPattern.slice(parents[0].length + 1);
     parents.shift();
   }

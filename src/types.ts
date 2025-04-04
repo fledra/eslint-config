@@ -66,6 +66,15 @@ export type TypescriptOptions =
   | (TypeScriptWithTypesOptions & OptionsOverrides)
   | (TypeScriptParserOptions & OptionsOverrides);
 
+export interface UnicornOptions {
+  /**
+   * Instead of cherry-picked rules, include all rules recommended by `eslint-plugin-unicorn`
+   *
+   * @default false
+   */
+  recommended?: boolean;
+}
+
 export interface ConfigOptions extends TypedFlatConfigItem {
 
   /**
@@ -99,6 +108,13 @@ export interface ConfigOptions extends TypedFlatConfigItem {
    * @default false
    */
   jsx?: boolean;
+
+  /**
+   * Options for eslint-plugin-unicorn.
+   *
+   * @default true
+   */
+  unicorn?: boolean | UnicornOptions;
 
   /**
    * Enable stylistic rules.

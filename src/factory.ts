@@ -6,7 +6,7 @@ import type { ResolvableFlatConfig } from 'eslint-flat-config-utils';
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import { isPackageExists } from 'local-pkg';
 
-import { comments, disables, gitignore, ignores, imports, javascript, node, stylistic, typescript } from './configs';
+import { comments, disables, gitignore, ignores, imports, javascript, node, stylistic, typescript, unicorn } from './configs';
 import { jsdoc } from './configs/jsdoc';
 
 export function resolveSubOptions<K extends keyof ConfigOptions>(options: ConfigOptions, key: K) {
@@ -34,6 +34,7 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     ignores: optionsIgnores,
     gitignore: enableGitignore = true,
     jsx: enableJsx = false,
+    unicorn: enableUnicorn = true,
     typescript: enableTypescript = isPackageExists('typescript'),
   } = options;
 
@@ -65,6 +66,11 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     jsdoc(!!stylisticOptions),
     imports(!!stylisticOptions),
   );
+
+  if (enableUnicorn) {
+    const unicornOptions = resolveSubOptions(options, 'unicorn');
+    configs.push(unicorn(unicornOptions));
+  }
 
   if (stylisticOptions) {
     configs.push(
