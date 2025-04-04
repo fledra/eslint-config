@@ -1,5 +1,6 @@
 import type { OptionsOverrides, TypedFlatConfigItem } from '../types';
 import globals from 'globals';
+import pluginUnusedImports from 'eslint-plugin-unused-imports';
 
 export function javascript(options: OptionsOverrides = {}): TypedFlatConfigItem[] {
   const { overrides = {} } = options;
@@ -33,6 +34,9 @@ export function javascript(options: OptionsOverrides = {}): TypedFlatConfigItem[
     },
     {
       name: 'fledra/javascript/rules',
+      plugins: {
+        'unused-imports': pluginUnusedImports,
+      },
       rules: {
         'accessor-pairs': ['error', { enforceForClassMembers: true, getWithoutSet: true }],
         'arrow-body-style': ['error', 'as-needed'],
@@ -155,6 +159,18 @@ export function javascript(options: OptionsOverrides = {}): TypedFlatConfigItem[
         'valid-typeof': ['error', { requireStringLiterals: true }],
         'vars-on-top': 'error',
         'yoda': ['error', 'never'],
+
+        'unused-imports/no-unused-imports': 'error',
+        'unused-imports/no-unused-vars': [
+          'error',
+          {
+            args: 'after-used',
+            argsIgnorePattern: '^_',
+            ignoreRestSiblings: true,
+            vars: 'all',
+            varsIgnorePattern: '^_',
+          },
+        ],
 
         ...overrides,
       },
