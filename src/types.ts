@@ -96,6 +96,13 @@ export interface ConfigOptions extends TypedFlatConfigItem, OptionsComponentExts
   jsonc?: boolean | OptionsOverrides;
 
   /**
+   * Enable YAML support.
+   *
+   * @default true
+   */
+  yaml?: boolean | OptionsOverrides;
+
+  /**
    * Enable stylistic rules.
    *
    * @see https://eslint.style/

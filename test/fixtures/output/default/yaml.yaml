@@ -1,0 +1,39 @@
+# comment without a space
+key1: value1
+key2: [one, two, three]
+key3: {a:1, b:2}
+
+key4:
+  - item1
+
+  - item2
+
+  - item4
+key5:
+
+  nestedKey: value
+  anotherNested: tab-indented
+
+key6: '"escape" hatch'
+key7: 'foo  '
+
+key9:
+  -subitem1
+  -
+  -  subitem3
+key10:
+  : missingKeyName
+  validKey: value
+  '': emptyKey
+key11:
+  - one
+  - two
+  - three:
+      - four
+  - five
+key12: value
+
+key13: |
+  multi-line
+    scalar with trailing   spaces
+  and	irregular

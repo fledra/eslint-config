@@ -7,7 +7,7 @@ import type { Awaitable, ConfigOptions, ResolvedOptions, TypedFlatConfigItem } f
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import { isPackageExists } from 'local-pkg';
 
-import { comments, disables, gitignore, ignores, imports, javascript, jsonc, node, perfectionist, stylistic, typescript, unicorn, vue } from './configs';
+import { comments, disables, gitignore, ignores, imports, javascript, jsonc, node, perfectionist, stylistic, typescript, unicorn, vue, yaml } from './configs';
 import { jsdoc } from './configs/jsdoc';
 
 const VuePackages = ['vue', 'nuxt'];
@@ -41,6 +41,7 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     jsonc: enableJSONC = true,
     unicorn: enableUnicorn = true,
     typescript: enableTypescript = isPackageExists('typescript'),
+    yaml: enableYaml = true,
     vue: enableVue = VuePackages.some((p) => isPackageExists(p)),
   } = options;
 
@@ -122,6 +123,14 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
       // sortPackageJson(),
       // sortTsconfig(),
     );
+  }
+
+  if (enableYaml) {
+    const yamlOptions = resolveSubOptions(options, 'yaml');
+    configs.push(yaml({
+      ...yamlOptions,
+      stylistic: stylisticOptions,
+    }));
   }
 
   configs.push(disables());

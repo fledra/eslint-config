@@ -12,3 +12,4 @@ export * from './stylistic';
 export * from './typescript';
 export * from './unicorn';
 export * from './vue';
+export * from './yaml';
