@@ -7,6 +7,7 @@ import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import { isPackageExists } from 'local-pkg';
 
 import { comments, disables, gitignore, ignores, imports, javascript, node, stylistic, typescript } from './configs';
+import { jsdoc } from './configs/jsdoc';
 
 export function resolveSubOptions<K extends keyof ConfigOptions>(options: ConfigOptions, key: K) {
   if (typeof options[key] === 'boolean' || !options[key])
@@ -61,6 +62,7 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     javascript({ overrides: getOverrides(options, 'javascript') }),
     comments(),
     node(),
+    jsdoc(!!stylisticOptions),
     imports(!!stylisticOptions),
   );
 
