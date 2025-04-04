@@ -6,6 +6,7 @@ import { flatConfigsToRulesDTS } from 'eslint-typegen/core';
 import { builtinRules } from 'eslint/use-at-your-own-risk';
 
 import { comments, disables, ignores, imports, javascript, jsdoc, jsonc, node, perfectionist, stylistic, typescript, unicorn, vue, yaml } from '../src';
+import { toml } from '../src/configs/toml';
 
 // Combine all configs into a single flat array
 async function combine(...configs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[]) {
@@ -34,6 +35,7 @@ const configs = await combine(
   perfectionist(),
   vue(),
   yaml(),
+  toml(),
   disables(),
 );
 

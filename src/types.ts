@@ -103,6 +103,13 @@ export interface ConfigOptions extends TypedFlatConfigItem, OptionsComponentExts
   yaml?: boolean | OptionsOverrides;
 
   /**
+   * Enable TOML support.
+   *
+   * @default true
+   */
+  toml?: boolean | OptionsOverrides;
+
+  /**
    * Enable stylistic rules.
    *
    * @see https://eslint.style/

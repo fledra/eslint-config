@@ -9,6 +9,7 @@ export * from './jsonc';
 export * from './node';
 export * from './perfectionist';
 export * from './stylistic';
+export * from './toml';
 export * from './typescript';
 export * from './unicorn';
 export * from './vue';
