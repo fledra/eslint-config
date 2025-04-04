@@ -1,11 +1,10 @@
 {
   "name": "@fledra/eslint-config",
   "description": "One opinionated config for ESLint",
-  "author": "Baran D. <baran@fledra.dev> (https://fledra.dev)",
-  "license": "MIT",
   "version": "1.0.0",
+  "license": "MIT",
   "type": "module",
-  "packageManager": "pnpm@10.7.0",
+  "author": "Baran D. <baran@fledra.dev> (https://fledra.dev)",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
@@ -21,6 +20,7 @@
   "bugs": {
     "url": "https://github.com/fledra/eslint-config/issues"
   },
+  "packageManager": "pnpm@10.7.0",
   "scripts": {
     "prepare": "husky",
     "build": "pnpm generate && tsup --clean --dts",

@@ -79,3 +79,249 @@ export async function jsonc(options: JSONCOptions = {}): Promise<TypedFlatConfig
     },
   ];
 }
+
+/**
+ * Sort package.json
+ */
+export async function sortPackageJson(): Promise<TypedFlatConfigItem[]> {
+  return [
+    {
+      name: 'fledra/sort/package-json',
+      files: ['**/package.json'],
+      rules: {
+        'jsonc/sort-array-values': [
+          'error',
+          {
+            order: { type: 'asc' },
+            pathPattern: '^files$',
+          },
+        ],
+        'jsonc/sort-keys': [
+          'error',
+          {
+            order: [
+              'name',
+              'displayName',
+              'description',
+              'private',
+              'version',
+              'license',
+              'type',
+              'module',
+              'author',
+              'contributors',
+              'publisher',
+              'bin',
+              'main',
+              'types',
+              'typesVersions',
+              'files',
+              'exports',
+              'homepage',
+              'repository',
+              'bugs',
+              'funding',
+              'engines',
+              'packageManager',
+              'icon',
+              'categories',
+              'contributes',
+              'activationEvents',
+              'sideEffects',
+              'scripts',
+              'dependencies',
+              'devDependencies',
+              'peerDependencies',
+              'peerDependenciesMeta',
+              'optionalDependencies',
+              'overrides',
+              'resolutions',
+              'pnpm',
+              'husky',
+              'simple-git-hooks',
+              'lint-staged',
+              'eslintConfig',
+              'unpkg',
+              'jsdelivr',
+            ],
+            pathPattern: '^$',
+          },
+          {
+            order: { type: 'asc' },
+            pathPattern: '^(?:dev|peer|optional|bundled)?[Dd]ependencies(Meta)?$',
+          },
+          {
+            order: { type: 'asc' },
+            pathPattern: '^(?:resolutions|overrides|pnpm.overrides)$',
+          },
+          {
+            order: [
+              'types',
+              'import',
+              'require',
+              'default',
+            ],
+            pathPattern: '^exports.*$',
+          },
+          {
+            order: [
+              // client hooks only
+              'pre-commit',
+              'prepare-commit-msg',
+              'commit-msg',
+              'post-commit',
+              'pre-rebase',
+              'post-rewrite',
+              'post-checkout',
+              'post-merge',
+              'pre-push',
+              'pre-auto-gc',
+            ],
+            pathPattern: '^(?:gitHooks|husky|simple-git-hooks)$',
+          },
+        ],
+      },
+    },
+  ];
+}
+
+/**
+ * Sort tsconfig.json
+ */
+export function sortTsconfig(): TypedFlatConfigItem[] {
+  return [
+    {
+      name: 'fledra/sort/tsconfig-json',
+      files: ['**/tsconfig.json', '**/tsconfig.*.json'],
+      rules: {
+        'jsonc/sort-keys': [
+          'error',
+          {
+            order: [
+              'extends',
+              'compilerOptions',
+              'references',
+              'files',
+              'include',
+              'exclude',
+            ],
+            pathPattern: '^$',
+          },
+          {
+            order: [
+              /* Projects */
+              'incremental',
+              'composite',
+              'tsBuildInfoFile',
+              'disableSourceOfProjectReferenceRedirect',
+              'disableSolutionSearching',
+              'disableReferencedProjectLoad',
+
+              /* Language and Environment */
+              'target',
+              'jsx',
+              'jsxFactory',
+              'jsxFragmentFactory',
+              'jsxImportSource',
+              'lib',
+              'moduleDetection',
+              'noLib',
+              'reactNamespace',
+              'useDefineForClassFields',
+              'emitDecoratorMetadata',
+              'experimentalDecorators',
+              'libReplacement',
+
+              /* Modules */
+              'baseUrl',
+              'rootDir',
+              'rootDirs',
+              'customConditions',
+              'module',
+              'moduleResolution',
+              'moduleSuffixes',
+              'noResolve',
+              'resolveJsonModule',
+              'resolvePackageJsonExports',
+              'resolvePackageJsonImports',
+              'allowArbitraryExtensions',
+              'allowImportingTsExtensions',
+              'allowUmdGlobalAccess',
+
+              /* JavaScript Support */
+              'allowJs',
+              'checkJs',
+              'maxNodeModuleJsDepth',
+
+              /* Type Checking */
+              'strict',
+              'strictBindCallApply',
+              'strictFunctionTypes',
+              'strictNullChecks',
+              'strictPropertyInitialization',
+              'allowUnreachableCode',
+              'allowUnusedLabels',
+              'alwaysStrict',
+              'exactOptionalPropertyTypes',
+              'noFallthroughCasesInSwitch',
+              'noImplicitAny',
+              'noImplicitOverride',
+              'noImplicitReturns',
+              'noImplicitThis',
+              'noPropertyAccessFromIndexSignature',
+              'noUncheckedIndexedAccess',
+              'noUnusedLocals',
+              'noUnusedParameters',
+              'useUnknownInCatchVariables',
+
+              /* Emit */
+              'declaration',
+              'declarationDir',
+              'declarationMap',
+              'downlevelIteration',
+              'emitBOM',
+              'emitDeclarationOnly',
+              'importHelpers',
+              'importsNotUsedAsValues',
+              'inlineSourceMap',
+              'inlineSources',
+              'mapRoot',
+              'newLine',
+              'noEmit',
+              'noEmitHelpers',
+              'noEmitOnError',
+              'outDir',
+              'outFile',
+              'preserveConstEnums',
+              'preserveValueImports',
+              'removeComments',
+              'sourceMap',
+              'sourceRoot',
+              'stripInternal',
+
+              /* Interop Constraints */
+              'allowSyntheticDefaultImports',
+              'esModuleInterop',
+              'forceConsistentCasingInFileNames',
+              'isolatedDeclarations',
+              'isolatedModules',
+              'preserveSymlinks',
+              'verbatimModuleSyntax',
+              'erasableSyntaxOnly',
+
+              /* Completeness */
+              'skipDefaultLibCheck',
+              'skipLibCheck',
+
+              /* lastly */
+              'paths',
+              'typeRoots',
+              'types',
+            ],
+            pathPattern: '^compilerOptions$',
+          },
+        ],
+      },
+    },
+  ];
+}

@@ -7,7 +7,26 @@ import type { Awaitable, ConfigOptions, ResolvedOptions, TypedFlatConfigItem } f
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import { isPackageExists } from 'local-pkg';
 
-import { comments, disables, gitignore, ignores, imports, javascript, jsdoc, jsonc, node, perfectionist, stylistic, toml, typescript, unicorn, vue, yaml } from './configs';
+import {
+  comments,
+  disables,
+  gitignore,
+  ignores,
+  imports,
+  javascript,
+  jsdoc,
+  jsonc,
+  node,
+  perfectionist,
+  sortPackageJson,
+  sortTsconfig,
+  stylistic,
+  toml,
+  typescript,
+  unicorn,
+  vue,
+  yaml,
+} from './configs';
 
 const VuePackages = ['vue', 'nuxt'];
 
@@ -120,8 +139,8 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
         overrides: getOverrides(options, 'jsonc'),
         stylistic: stylisticOptions,
       }),
-      // sortPackageJson(),
-      // sortTsconfig(),
+      sortPackageJson(),
+      sortTsconfig(),
     );
   }
 
