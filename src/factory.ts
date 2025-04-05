@@ -16,6 +16,7 @@ import {
   javascript,
   jsdoc,
   jsonc,
+  markdown,
   node,
   perfectionist,
   sortPackageJson,
@@ -58,6 +59,7 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     jsx: enableJsx = false,
     jsonc: enableJSONC = true,
     unicorn: enableUnicorn = true,
+    markdown: enableMarkdown = true,
     typescript: enableTypescript = isPackageExists('typescript'),
     toml: enableToml = true,
     yaml: enableYaml = true,
@@ -134,9 +136,10 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
   }
 
   if (enableJSONC) {
+    const jsoncOptions = resolveSubOptions(options, 'jsonc');
     configs.push(
       jsonc({
-        overrides: getOverrides(options, 'jsonc'),
+        ...jsoncOptions,
         stylistic: stylisticOptions,
       }),
       sortPackageJson(),
@@ -157,6 +160,14 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     configs.push(toml({
       ...tomlOptions,
       stylistic: stylisticOptions,
+    }));
+  }
+
+  if (enableMarkdown) {
+    const markdownOptions = resolveSubOptions(options, 'markdown');
+    configs.push(markdown({
+      ...markdownOptions,
+      componentExts,
     }));
   }
 

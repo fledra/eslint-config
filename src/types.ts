@@ -110,6 +110,13 @@ export interface ConfigOptions extends TypedFlatConfigItem, OptionsComponentExts
   toml?: boolean | OptionsOverrides;
 
   /**
+   * Enable linting for **code snippets** in Markdown.
+   *
+   * @default true
+   */
+  markdown?: boolean | OptionsOverrides;
+
+  /**
    * Enable stylistic rules.
    *
    * @see https://eslint.style/

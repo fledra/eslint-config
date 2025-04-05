@@ -5,7 +5,7 @@ import fs from 'node:fs/promises';
 import { flatConfigsToRulesDTS } from 'eslint-typegen/core';
 import { builtinRules } from 'eslint/use-at-your-own-risk';
 
-import { comments, disables, ignores, imports, javascript, jsdoc, jsonc, node, perfectionist, stylistic, typescript, unicorn, vue, yaml } from '../src';
+import { comments, disables, ignores, imports, javascript, jsdoc, jsonc, markdown, node, perfectionist, stylistic, typescript, unicorn, vue, yaml } from '../src';
 import { toml } from '../src/configs/toml';
 
 // Combine all configs into a single flat array
@@ -36,6 +36,7 @@ const configs = await combine(
   vue(),
   yaml(),
   toml(),
+  markdown(),
   disables(),
 );
 
