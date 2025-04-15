@@ -1,7 +1,7 @@
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { Linter } from 'eslint';
 
-import type { FlatGitignoreOptions, TypescriptOptions, UnicornOptions, VueOptions } from './configs';
+import type { FlatGitignoreOptions, JSONCOptions, TypescriptOptions, UnicornOptions, VueOptions } from './configs';
 import type { RuleOptions } from './typegen';
 
 export type Awaitable<T> = T | Promise<T>;
@@ -93,7 +93,7 @@ export interface ConfigOptions extends TypedFlatConfigItem, OptionsComponentExts
    *
    * @default true
    */
-  jsonc?: boolean | OptionsOverrides;
+  jsonc?: boolean | JSONCOptions;
 
   /**
    * Enable YAML support.

@@ -8,7 +8,21 @@ import parserJsonc from 'jsonc-eslint-parser';
 import { GLOB_JSON, GLOB_JSON5, GLOB_JSONC } from '../globs';
 import { defaultStylisticOptions } from './stylistic';
 
+interface JSONCSortableOptions {
+  packageJson?: boolean;
+  tsconfig?: boolean;
+}
+
 export interface JSONCOptions extends OptionsFiles, OptionsOverrides {
+  /**
+   * Enable auto-sorting of supported JSON files (e.g. `tsconfig.json`)
+   *
+   * Pass an object to configure which sorters to enable.
+   *
+   * @default true
+   */
+  sort?: boolean | JSONCSortableOptions;
+
   stylistic?: boolean | StylisticCustomizeOptions;
 }
 

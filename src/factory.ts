@@ -31,11 +31,11 @@ import {
 
 const VuePackages = ['vue', 'nuxt'];
 
-export function resolveSubOptions<K extends keyof ConfigOptions>(options: ConfigOptions, key: K) {
+export function resolveSubOptions<T extends object, K extends keyof T>(options: T, key: K) {
   if (typeof options[key] === 'boolean' || !options[key])
     return {} as never;
 
-  return options[key] as ResolvedOptions<ConfigOptions[K]>;
+  return options[key] as ResolvedOptions<T[K]>;
 }
 
 export function getOverrides<K extends keyof ConfigOptions>(
@@ -136,15 +136,36 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
   }
 
   if (enableJSONC) {
-    const jsoncOptions = resolveSubOptions(options, 'jsonc');
+    const {
+      sort: sorterOptions = true,
+      ...jsoncOptions
+    } = resolveSubOptions(options, 'jsonc');
+
     configs.push(
       jsonc({
         ...jsoncOptions,
         stylistic: stylisticOptions,
       }),
-      sortPackageJson(),
-      sortTsconfig(),
     );
+
+    if (sorterOptions) {
+      if (typeof sorterOptions === 'boolean') {
+        configs.push(sortPackageJson(), sortTsconfig());
+      } else {
+        const {
+          packageJson: enablePackageJsonSort = true,
+          tsconfig: enableTsconfigSort = true,
+        } = sorterOptions;
+
+        if (enablePackageJsonSort) {
+          configs.push(sortPackageJson());
+        }
+
+        if (enableTsconfigSort) {
+          configs.push(sortTsconfig());
+        }
+      }
+    }
   }
 
   if (enableYaml) {
