@@ -1,5 +1,7 @@
 # @fledra/eslint-config
 
+![NPM Version](https://img.shields.io/npm/v/%40fledra%2Feslint-config?labelColor=%23444&color=%23333)
+
 One opinionated config for ESLint.
 
 This config is a refactored/modified version of [Anthony Fu's ESLint config](https://github.com/antfu/eslint-config).
