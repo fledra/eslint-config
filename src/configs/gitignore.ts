@@ -7,7 +7,7 @@ import process from 'node:process';
 
 import { findUpSync } from 'find-up-simple';
 
-export interface FlatGitignoreOptions {
+export interface GitignoreOptions {
   /**
    * Path to `.gitignore` files, or files with compatible formats like `.eslintignore`.
    * @default ['.gitignore'] // or first match within cwd path
@@ -120,7 +120,7 @@ function relativeMinimatch(pattern: string, relativePath: string, cwd: string) {
   return null;
 }
 
-export function gitignore(options: FlatGitignoreOptions = {}): TypedFlatConfigItem {
+export function gitignore(options: GitignoreOptions = {}): TypedFlatConfigItem {
   const ignores: string[] = [];
 
   const {
