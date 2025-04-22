@@ -54,7 +54,7 @@ export function toml(options: TOMLOptions = {}): TypedFlatConfigItem[] {
 
         ...(stylistic && {
           'toml/array-bracket-newline': 'error',
-          'toml/array-bracket-spacing': 'error',
+          'toml/array-bracket-spacing': ['error', 'never'],
           'toml/array-element-newline': 'error',
           'toml/indent': ['error', indent === 'tab' ? 2 : indent],
           'toml/inline-table-curly-spacing': 'error',
