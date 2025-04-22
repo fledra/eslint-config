@@ -31,7 +31,8 @@
     "prepack": "pnpm build",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "bump": "pnpx changelogen@latest --release"
   },
   "dependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
@@ -78,5 +79,9 @@
   },
   "peerDependencies": {
     "eslint": "^9.10.0"
+  },
+  "changelog": {
+    "output": false,
+    "hideAuthorEmail": true
   }
 }
