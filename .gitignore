@@ -6,6 +6,7 @@ node_modules
 .cache
 .eslint-config-inspector
 dist
+test/_fixtures
 src/typegen.d.ts
 
 # Logs
