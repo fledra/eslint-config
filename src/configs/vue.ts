@@ -121,7 +121,7 @@ export async function vue(options: VueOptions = {}): Promise<TypedFlatConfigItem
             },
 
         'node/prefer-global/process': 'off',
-        '@typescript-eslint/explicit-function-return-type': 'off',
+        'ts/explicit-function-return-type': 'off',
 
         'vue/block-order': ['error', { order: ['template', 'script', 'style'] }],
         'vue/component-name-in-template-casing': ['error', 'PascalCase'],

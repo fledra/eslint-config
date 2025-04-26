@@ -53,8 +53,45 @@ I followed Anthony's config for the most part so configuration options are prett
 
 ### Important notes about configuration
 
-- No plugins are renamed
 - `type` key does not exist in the configuration object
+
+## Plugins Renaming
+
+I thought I did not want any plugin renaming at first but only kept the original name of `@typescript-eslint`, which was confusing.
+
+From version `2.0.0` onwards plugin renaming is enabled by default.
+
+| New Prefix | Original Prefix        | Source Plugin                                                                              |
+| ---------- | ---------------------- | ------------------------------------------------------------------------------------------ |
+| `import/*` | `import-x/*`           | [eslint-plugin-import-x](https://github.com/un-es/eslint-plugin-import-x)                  |
+| `node/*`   | `n/*`                  | [eslint-plugin-n](https://github.com/eslint-community/eslint-plugin-n)                     |
+| `yaml/*`   | `yml/*`                | [eslint-plugin-yml](https://github.com/ota-meshi/eslint-plugin-yml)                        |
+| `ts/*`     | `@typescript-eslint/*` | [@typescript-eslint/eslint-plugin](https://github.com/typescript-eslint/typescript-eslint) |
+| `style/*`  | `@stylistic/*`         | [@stylistic/eslint-plugin](https://github.com/eslint-stylistic/eslint-stylistic)           |
+
+When you want to override rules, or disable them inline, you need to use the new prefix:
+
+```diff
+-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
++// eslint-disable-next-line ts/consistent-type-definitions
+type foo = { bar: 2 }
+```
+
+### Change back to original prefix
+
+If you really want to use the original prefix, you can revert the plugin renaming by:
+
+```ts
+import fledra from '@fledra/eslint-config';
+
+export default fledra()
+  .renamePlugins({
+    ts: '@typescript-eslint',
+    yaml: 'yml',
+    node: 'n'
+    // ...
+  });
+```
 
 ## License
 

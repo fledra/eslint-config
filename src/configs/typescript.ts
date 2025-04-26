@@ -73,28 +73,25 @@ export function typescript(
   const typeAwareRules: TypedFlatConfigItem['rules'] = {
     'dot-notation': 'off',
     'no-implied-eval': 'off',
-    '@typescript-eslint/await-thenable': 'error',
-    '@typescript-eslint/dot-notation': ['error', { allowKeywords: true }],
-    '@typescript-eslint/no-floating-promises': 'error',
-    '@typescript-eslint/no-for-in-array': 'error',
-    '@typescript-eslint/no-implied-eval': 'error',
-    '@typescript-eslint/no-misused-promises': 'error',
-    '@typescript-eslint/no-unnecessary-type-assertion': 'error',
-    '@typescript-eslint/no-unsafe-argument': 'error',
-    '@typescript-eslint/no-unsafe-assignment': 'error',
-    '@typescript-eslint/no-unsafe-call': 'error',
-    '@typescript-eslint/no-unsafe-member-access': 'error',
-    '@typescript-eslint/no-unsafe-return': 'error',
-    '@typescript-eslint/promise-function-async': 'error',
-    '@typescript-eslint/restrict-plus-operands': 'error',
-    '@typescript-eslint/restrict-template-expressions': 'error',
-    '@typescript-eslint/return-await': ['error', 'in-try-catch'],
-    '@typescript-eslint/strict-boolean-expressions': [
-      'error',
-      { allowNullableBoolean: true, allowNullableObject: true },
-    ],
-    '@typescript-eslint/switch-exhaustiveness-check': 'error',
-    '@typescript-eslint/unbound-method': 'error',
+    'ts/await-thenable': 'error',
+    'ts/dot-notation': ['error', { allowKeywords: true }],
+    'ts/no-floating-promises': 'error',
+    'ts/no-for-in-array': 'error',
+    'ts/no-implied-eval': 'error',
+    'ts/no-misused-promises': 'error',
+    'ts/no-unnecessary-type-assertion': 'error',
+    'ts/no-unsafe-argument': 'error',
+    'ts/no-unsafe-assignment': 'error',
+    'ts/no-unsafe-call': 'error',
+    'ts/no-unsafe-member-access': 'error',
+    'ts/no-unsafe-return': 'error',
+    'ts/promise-function-async': 'error',
+    'ts/restrict-plus-operands': 'error',
+    'ts/restrict-template-expressions': 'error',
+    'ts/return-await': ['error', 'in-try-catch'],
+    'ts/strict-boolean-expressions': ['error', { allowNullableBoolean: true, allowNullableObject: true }],
+    'ts/switch-exhaustiveness-check': 'error',
+    'ts/unbound-method': 'error',
   };
 
   function makeParser(typeAware: boolean, files: string[], ignores?: string[]): TypedFlatConfigItem {
@@ -125,7 +122,7 @@ export function typescript(
     {
       name: 'fledra/typescript/setup',
       plugins: {
-        '@typescript-eslint': pluginTs,
+        ts: pluginTs,
       },
     },
     ...(isTypeAware
@@ -148,9 +145,9 @@ export function typescript(
         'no-use-before-define': 'off',
         'unused-imports/no-unused-vars': 'off', // clashes with `@typescript-eslint/no-unused-vars`
 
-        '@typescript-eslint/ban-ts-comment': ['error', { 'ts-expect-error': 'allow-with-description' }],
-        '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
-        '@typescript-eslint/consistent-type-imports': [
+        'ts/ban-ts-comment': ['error', { 'ts-expect-error': 'allow-with-description' }],
+        'ts/consistent-type-definitions': ['error', 'interface'],
+        'ts/consistent-type-imports': [
           'error',
           {
             disallowTypeAnnotations: false,
@@ -158,15 +155,15 @@ export function typescript(
             prefer: 'type-imports',
           },
         ],
-        '@typescript-eslint/method-signature-style': ['error', 'property'],
-        '@typescript-eslint/no-dupe-class-members': 'error',
-        '@typescript-eslint/no-empty-object-type': ['error', { allowInterfaces: 'always' }],
-        '@typescript-eslint/no-explicit-any': ['error', { fixToUnknown: true }],
-        '@typescript-eslint/no-import-type-side-effects': 'error',
-        '@typescript-eslint/no-invalid-void-type': 'off',
-        '@typescript-eslint/no-redeclare': ['error', { builtinGlobals: false }],
-        '@typescript-eslint/no-require-imports': 'error',
-        '@typescript-eslint/no-unused-expressions': [
+        'ts/method-signature-style': ['error', 'property'],
+        'ts/no-dupe-class-members': 'error',
+        'ts/no-empty-object-type': ['error', { allowInterfaces: 'always' }],
+        'ts/no-explicit-any': ['error', { fixToUnknown: true }],
+        'ts/no-import-type-side-effects': 'error',
+        'ts/no-invalid-void-type': 'off',
+        'ts/no-redeclare': ['error', { builtinGlobals: false }],
+        'ts/no-require-imports': 'error',
+        'ts/no-unused-expressions': [
           'error',
           {
             allowShortCircuit: true,
@@ -174,7 +171,7 @@ export function typescript(
             allowTernary: true,
           },
         ],
-        '@typescript-eslint/no-unused-vars': ['error', {
+        'ts/no-unused-vars': ['error', {
           args: 'after-used',
           argsIgnorePattern: '^_',
           caughtErrorsIgnorePattern: '^_',
@@ -183,9 +180,9 @@ export function typescript(
           varsIgnorePattern: '^_',
           ignoreRestSiblings: true,
         }],
-        '@typescript-eslint/no-use-before-define': ['error', { classes: false, functions: false, variables: true }],
-        '@typescript-eslint/no-wrapper-object-types': 'error',
-        '@typescript-eslint/unified-signatures': 'off',
+        'ts/no-use-before-define': ['error', { classes: false, functions: false, variables: true }],
+        'ts/no-wrapper-object-types': 'error',
+        'ts/unified-signatures': 'off',
 
         ...overrides,
       },

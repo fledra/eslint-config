@@ -29,6 +29,15 @@ import {
   yaml,
 } from './configs';
 
+const defaultPluginRenameMapping = {
+  '@stylistic': 'style',
+  '@typescript-eslint': 'ts',
+  'import-x': 'import',
+  'n': 'node',
+  'vitest': 'test',
+  'yml': 'yaml',
+};
+
 const VuePackages = ['vue', 'nuxt'];
 
 export function resolveSubOptions<T extends object, K extends keyof T>(options: T, key: K) {
@@ -55,6 +64,7 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
   const {
     componentExts = [],
     ignores: optionsIgnores,
+    renamePlugins = true,
     gitignore: enableGitignore = true,
     jsx: enableJsx = false,
     jsonc: enableJSONC = true,
@@ -196,6 +206,10 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
 
   let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>();
   composer = composer.append(...configs, ...otherConfigs);
+
+  if (renamePlugins) {
+    composer.renamePlugins(defaultPluginRenameMapping);
+  }
 
   return composer;
 }

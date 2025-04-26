@@ -10,7 +10,7 @@ export interface Rules extends RuleOptions {}
 
 export type TypedFlatConfigItem = Omit<Linter.Config<Linter.RulesRecord & Rules>, 'plugins'> & {
   // Relax plugins type limitation, not every plugin has the correct type info yet
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- note above
+  // eslint-disable-next-line ts/no-explicit-any -- note above
   plugins?: Record<string, any>;
 };
 
@@ -41,6 +41,12 @@ export interface OptionsComponentExts {
 }
 
 export interface ConfigOptions extends TypedFlatConfigItem, OptionsComponentExts {
+  /**
+   * Rename plugins in the config.
+   *
+   * @default true
+   */
+  renamePlugins?: boolean;
 
   /**
    * Enable gitignore support.
