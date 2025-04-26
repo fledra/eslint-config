@@ -52,10 +52,16 @@ export function stylistic(options: StylisticCustomizeOptions & OptionsOverrides 
     },
     rules: {
       ...config.rules,
+
       'style/brace-style': ['error', braceStyle, { allowSingleLine: true }],
       'style/no-extra-semi': 'error',
       'style/key-spacing': 'error',
-      'style/lines-between-class-members': ['error', 'always'],
+      'style/lines-between-class-members': ['error', {
+        enforce: [
+          { blankLine: 'always', prev: 'field', next: 'method' },
+          { blankLine: 'always', prev: 'method', next: 'method' },
+        ],
+      }, { exceptAfterOverload: true }],
       'style/no-multiple-empty-lines': ['error', { max: 1, maxBOF: 0, maxEOF: 0 }],
       'style/generator-star-spacing': ['error', { after: true, before: false }],
       'style/yield-star-spacing': ['error', { after: true, before: false }],
