@@ -1,8 +1,8 @@
-import type { TypedFlatConfigItem } from '../types';
+import type { OptionsOverrides, TypedFlatConfigItem } from '../types';
 
 import pluginUnicorn from 'eslint-plugin-unicorn';
 
-export interface UnicornOptions {
+export interface UnicornOptions extends OptionsOverrides {
   /**
    * Instead of cherry-picked rules, include all rules recommended by `eslint-plugin-unicorn`
    *
@@ -12,7 +12,7 @@ export interface UnicornOptions {
 }
 
 export function unicorn(options: UnicornOptions = {}): TypedFlatConfigItem {
-  const { recommended } = options;
+  const { recommended, overrides } = options;
 
   return {
     name: 'fledra/unicorn/rules',
@@ -46,6 +46,8 @@ export function unicorn(options: UnicornOptions = {}): TypedFlatConfigItem {
             'unicorn/prefer-type-error': 'error',
             'unicorn/throw-new-error': 'error',
           }),
+
+      ...overrides,
     },
   };
 }
