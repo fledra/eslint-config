@@ -74,7 +74,6 @@ export function stylistic(options: StylisticCustomizeOptions & OptionsOverrides 
       'antfu/consistent-chaining': 'error',
       'antfu/consistent-list-newline': 'error',
       'antfu/curly': 'error',
-      'antfu/if-newline': 'error',
       'antfu/top-level-function': 'error',
 
       ...overrides,
