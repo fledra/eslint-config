@@ -25,6 +25,7 @@ export function perfectionist(): TypedFlatConfigItem {
         newlinesBetween: 'always',
         order: 'asc',
         type: 'natural',
+        internalPattern: ['^~/.*', '^@/.*'],
       }],
       'perfectionist/sort-named-exports': ['error', { order: 'asc', type: 'natural' }],
       'perfectionist/sort-named-imports': ['error', { order: 'asc', type: 'natural' }],
