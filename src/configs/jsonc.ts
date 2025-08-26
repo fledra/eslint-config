@@ -81,7 +81,7 @@ export async function jsonc(options: JSONCOptions = {}): Promise<TypedFlatConfig
         'jsonc/no-useless-escape': 'error',
         'jsonc/object-curly-newline': ['error', { consistent: true, multiline: true }],
         'jsonc/object-curly-spacing': ['error', 'always'],
-        'jsonc/object-property-newline': ['error', { allowMultiplePropertiesPerLine: true }],
+        'jsonc/object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],
         'jsonc/space-unary-ops': 'error',
         'jsonc/valid-json-number': 'error',
         'jsonc/quote-props': 'error',
