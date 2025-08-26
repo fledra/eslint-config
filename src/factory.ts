@@ -32,7 +32,7 @@ import {
 const defaultPluginRenameMapping = {
   '@stylistic': 'style',
   '@typescript-eslint': 'ts',
-  'import-x': 'import',
+  'import-lite': 'import',
   'n': 'node',
   'vitest': 'test',
   'yml': 'yaml',

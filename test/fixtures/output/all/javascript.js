@@ -100,8 +100,7 @@ class C {
   }
 }
 
-if (baz)
-  foobar2(1, 2);
+if (baz) foobar2(1, 2);
 
 let foox, barx, baxaz;
 
