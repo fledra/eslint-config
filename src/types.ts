@@ -6,12 +6,18 @@ import type { RuleOptions } from './typegen';
 
 export type Awaitable<T> = T | Promise<T>;
 
-export interface Rules extends RuleOptions {}
+export type Rules = Record<string, Linter.RuleEntry | undefined> & RuleOptions;
 
-export type TypedFlatConfigItem = Omit<Linter.Config<Linter.RulesRecord & Rules>, 'plugins'> & {
+export type TypedFlatConfigItem = Omit<Linter.Config, 'plugins' | 'rules'> & {
   // Relax plugins type limitation, not every plugin has the correct type info yet
   // eslint-disable-next-line ts/no-explicit-any -- note above
   plugins?: Record<string, any>;
+
+  /**
+   * An object containing the configured rules. When `files` or `ignores` are
+   * specified, these rule configurations are only available to the matching files.
+   */
+  rules?: Rules;
 };
 
 export type ResolvedOptions<T> = T extends boolean ? never : NonNullable<T>;
