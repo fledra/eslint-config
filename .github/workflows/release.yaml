@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Generate release
+        run: pnpx changelogen@latest gh release
+        env:
+          - GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Publish to NPM
+        run: pnpm publish --provenance --access public --no-git-checks
+        env:
+          - NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
