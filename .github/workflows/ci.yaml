@@ -63,4 +63,4 @@ jobs:
         run: pnpm build
 
       - name: Run tests
-        run: pnpm lint
+        run: pnpm test
