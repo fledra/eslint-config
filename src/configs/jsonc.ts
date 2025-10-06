@@ -207,7 +207,7 @@ export function sortTsconfig(): TypedFlatConfigItem[] {
   return [
     {
       name: 'fledra/sort/tsconfig-json',
-      files: ['**/tsconfig.json', '**/tsconfig.*.json'],
+      files: ['**/[jt]sconfig.json', '**/[jt]sconfig.*.json'],
       rules: {
         'jsonc/sort-keys': [
           'error',
