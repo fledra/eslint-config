@@ -70,6 +70,7 @@ export function stylistic(options: StylisticCustomizeOptions & OptionsOverrides 
       'style/no-multi-spaces': ['error', { exceptions: { Property: false } }],
       'style/object-curly-newline': ['error', { consistent: true, multiline: true }],
       'style/object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],
+      'style/implicit-arrow-linebreak': ['error', 'beside'],
 
       'antfu/consistent-chaining': 'error',
       'antfu/consistent-list-newline': 'error',

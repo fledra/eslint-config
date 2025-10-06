@@ -84,8 +84,7 @@ function foobar2(bar, baz) {}
 
 let baz; // TODO:
 function m(foo) {
-  return (bar) =>
-    baz;
+  return (bar) => baz;
 } // here
 
 class C {
