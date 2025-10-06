@@ -3,9 +3,12 @@ import type { ConfigOptions } from '../src';
 import { exec } from 'node:child_process';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { platform } from 'node:process';
 import { promisify } from 'node:util';
 
 import { afterAll, beforeAll, it } from 'vitest';
+
+const timeout = platform === 'win32' ? 300_000 : 30_000;
 
 beforeAll(async () => {
   await fs.rm(path.resolve('test', '_fixtures'), { recursive: true, force: true });
@@ -60,5 +63,5 @@ export default fledra(${JSON.stringify(config)})
 
       await expect.soft(content).toMatchFileSnapshot(path.join(output, file));
     }));
-  });
+  }, timeout);
 }
