@@ -1,7 +1,7 @@
 {
   "name": "@fledra/eslint-config",
   "description": "One opinionated config for ESLint",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "license": "MIT",
   "type": "module",
   "author": "Baran D. <baran@fledra.dev> (https://fledra.dev)",
