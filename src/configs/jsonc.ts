@@ -130,6 +130,7 @@ export async function sortPackageJson(): Promise<TypedFlatConfigItem[]> {
               'types',
               'typesVersions',
               'files',
+              'imports',
               'exports',
               'homepage',
               'repository',
