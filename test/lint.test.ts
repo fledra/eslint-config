@@ -20,13 +20,20 @@ afterAll(async () => {
 
 runWithConfig('default', {});
 
+runWithConfig('js', {
+  typescript: false,
+  vue: {
+    typescript: false,
+  },
+});
+
 runWithConfig('all', {
   jsonc: true,
   typescript: true,
   vue: true,
 });
 
-async function runWithConfig(name: string, config?: ConfigOptions) {
+async function runWithConfig(name: string, config: ConfigOptions) {
   it.concurrent(name, async ({ expect }) => {
     const input = path.resolve('test', 'fixtures', 'input');
     const output = path.resolve('test', 'fixtures', 'output', name);
@@ -55,8 +62,9 @@ export default fledra(${JSON.stringify(config)})
       const source = await fs.readFile(path.join(input, file), 'utf-8');
       const content = await fs.readFile(path.join(target, file), 'utf-8');
       const outputPath = path.join(output, file);
+      const isTypescriptFile = file.includes('-ts.');
 
-      if (content === source) {
+      if (content === source || (!config.typescript && isTypescriptFile)) {
         await fs.rm(outputPath, { force: true });
         return;
       }
