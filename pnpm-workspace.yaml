@@ -1,3 +1,7 @@
+shamefullyHoist: true
+shellEmulator: true
+strictPeerDependencies: false
+
 onlyBuiltDependencies:
   - esbuild
   - unrs-resolver
