@@ -5,8 +5,24 @@ import fs from 'node:fs/promises';
 import { flatConfigsToRulesDTS } from 'eslint-typegen/core';
 import { builtinRules } from 'eslint/use-at-your-own-risk';
 
-import { comments, disables, ignores, imports, javascript, jsdoc, jsonc, markdown, node, perfectionist, stylistic, typescript, unicorn, vue, yaml } from '../src';
-import { toml } from '../src/configs/toml';
+import {
+  comments,
+  disables,
+  ignores,
+  imports,
+  javascript,
+  jsdoc,
+  jsonc,
+  markdown,
+  node,
+  perfectionist,
+  stylistic,
+  toml,
+  typescript,
+  unicorn,
+  vue,
+  yaml,
+} from '../src/configs';
 
 // Combine all configs into a single flat array
 async function combine(...configs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[]) {

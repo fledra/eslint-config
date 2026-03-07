@@ -67,6 +67,7 @@ export function stylistic(options: StylisticCustomizeOptions & OptionsOverrides 
       'style/yield-star-spacing': ['error', { after: true, before: false }],
       'style/padded-blocks': ['error', 'never'],
       'style/object-curly-spacing': ['error', 'always'],
+      'style/operator-linebreak': ['error', 'before'],
       'style/no-multi-spaces': ['error', { exceptions: { Property: false } }],
       'style/object-curly-newline': ['error', { consistent: true, multiline: true }],
       'style/object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],

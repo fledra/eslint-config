@@ -1,6 +1,5 @@
 import type { TypedFlatConfigItem } from '../types';
 
-// @ts-expect-error no types
 import pluginComments from '@eslint-community/eslint-plugin-eslint-comments';
 
 export function comments(): TypedFlatConfigItem {

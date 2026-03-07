@@ -41,9 +41,7 @@ export interface TypeScriptParserOptions {
   ignoresTypeAware?: string[];
 }
 
-export type TypescriptOptions =
-  | (TypeScriptWithTypesOptions & OptionsOverrides)
-  | (TypeScriptParserOptions & OptionsOverrides);
+export type TypescriptOptions = (TypeScriptWithTypesOptions & OptionsOverrides) | (TypeScriptParserOptions & OptionsOverrides);
 
 export function typescript(
   options: OptionsFiles & OptionsOverrides & OptionsComponentExts & TypeScriptWithTypesOptions & TypeScriptParserOptions = {},
