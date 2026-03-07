@@ -2,29 +2,33 @@ import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 
 import type { OptionsFiles, OptionsOverrides, TypedFlatConfigItem } from '../types';
 
-import pluginToml from 'eslint-plugin-toml';
-import parserToml from 'toml-eslint-parser';
-
 import { GLOB_TOML } from '../globs';
+import { interopDefault } from '../utils';
 import { defaultStylisticOptions } from './stylistic';
 
 export interface TOMLOptions extends OptionsOverrides, OptionsFiles {
   stylistic?: boolean | StylisticCustomizeOptions;
 }
 
-export function toml(options: TOMLOptions = {}): TypedFlatConfigItem[] {
+export async function toml(options: TOMLOptions = {}): Promise<TypedFlatConfigItem[]> {
   const {
     files = [GLOB_TOML],
     overrides = {},
     stylistic = true,
   } = options;
 
-  const {
-    indent,
-  } = {
+  const { indent } = {
     ...defaultStylisticOptions,
     ...(typeof stylistic === 'boolean' ? {} : stylistic),
   };
+
+  const [
+    pluginToml,
+    parserToml,
+  ] = await Promise.all([
+    interopDefault(import('eslint-plugin-toml')),
+    interopDefault(import('toml-eslint-parser')),
+  ]);
 
   return [
     {
@@ -34,11 +38,11 @@ export function toml(options: TOMLOptions = {}): TypedFlatConfigItem[] {
       },
     },
     {
-      files,
+      name: 'fledra/toml/rules',
       languageOptions: {
         parser: parserToml,
       },
-      name: 'fledra/toml/rules',
+      files,
       rules: {
         'style/spaced-comment': 'off', // clashes with toml plugin rule
 
@@ -56,7 +60,7 @@ export function toml(options: TOMLOptions = {}): TypedFlatConfigItem[] {
           'toml/array-bracket-newline': 'error',
           'toml/array-bracket-spacing': ['error', 'never'],
           'toml/array-element-newline': 'error',
-          'toml/indent': ['error', indent === 'tab' ? 2 : indent],
+          'toml/indent': ['error', typeof indent === 'number' ? indent : 'tab'],
           'toml/inline-table-curly-spacing': 'error',
           'toml/key-spacing': 'error',
           // 'toml/padding-line-between-pairs': 'error',

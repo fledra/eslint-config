@@ -2,30 +2,33 @@ import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 
 import type { OptionsFiles, OptionsOverrides, TypedFlatConfigItem } from '../types';
 
-import pluginYaml from 'eslint-plugin-yml';
-import parserYaml from 'yaml-eslint-parser';
-
 import { GLOB_YAML } from '../globs';
+import { interopDefault } from '../utils';
 import { defaultStylisticOptions } from './stylistic';
 
 export interface YAMLOptions extends OptionsOverrides, OptionsFiles {
   stylistic?: boolean | StylisticCustomizeOptions;
 }
 
-export function yaml(options: YAMLOptions = {}): TypedFlatConfigItem[] {
+export async function yaml(options: YAMLOptions = {}): Promise<TypedFlatConfigItem[]> {
   const {
     files = [GLOB_YAML],
     overrides = {},
     stylistic = true,
   } = options;
 
-  const {
-    indent,
-    quotes,
-  } = {
+  const { indent, quotes } = {
     ...defaultStylisticOptions,
     ...(typeof stylistic === 'boolean' ? {} : stylistic),
   };
+
+  const [
+    pluginYaml,
+    parserYaml,
+  ] = await Promise.all([
+    interopDefault(import('eslint-plugin-yml')),
+    interopDefault(import('yaml-eslint-parser')),
+  ]);
 
   return [
     {
@@ -59,7 +62,7 @@ export function yaml(options: YAMLOptions = {}): TypedFlatConfigItem[] {
           'yaml/flow-mapping-curly-spacing': 'error',
           'yaml/flow-sequence-bracket-newline': 'error',
           'yaml/flow-sequence-bracket-spacing': 'error',
-          'yaml/indent': ['error', indent === 'tab' ? 2 : indent],
+          'yaml/indent': ['error', typeof indent === 'number' ? indent : undefined],
           'yaml/key-spacing': 'error',
           'yaml/no-tab-indent': 'error',
           'yaml/quotes': ['error', {

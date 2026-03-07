@@ -2,10 +2,8 @@ import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 
 import type { OptionsFiles, OptionsOverrides, TypedFlatConfigItem } from '../types';
 
-import pluginJsonc from 'eslint-plugin-jsonc';
-import parserJsonc from 'jsonc-eslint-parser';
-
 import { GLOB_JSON, GLOB_JSON5, GLOB_JSONC } from '../globs';
+import { interopDefault } from '../utils';
 import { defaultStylisticOptions } from './stylistic';
 
 interface JSONCSortableOptions {
@@ -33,9 +31,18 @@ export async function jsonc(options: JSONCOptions = {}): Promise<TypedFlatConfig
     stylistic = true,
   } = options;
 
-  const {
-    indent = 2,
-  } = typeof stylistic === 'boolean' ? defaultStylisticOptions : stylistic;
+  const { indent } = {
+    ...defaultStylisticOptions,
+    ...(typeof stylistic === 'boolean' ? {} : stylistic),
+  };
+
+  const [
+    pluginJsonc,
+    parserJsonc,
+  ] = await Promise.all([
+    interopDefault(import('eslint-plugin-jsonc')),
+    interopDefault(import('jsonc-eslint-parser')),
+  ]);
 
   return [
     {
@@ -54,7 +61,7 @@ export async function jsonc(options: JSONCOptions = {}): Promise<TypedFlatConfig
         'jsonc/array-bracket-spacing': ['error', 'never'],
         'jsonc/comma-dangle': ['error', 'never'],
         'jsonc/comma-style': ['error', 'last'],
-        'jsonc/indent': ['error', indent],
+        'jsonc/indent': ['error', typeof indent === 'number' ? indent : 'tab'],
         'jsonc/key-spacing': ['error', { afterColon: true, beforeColon: false }],
         'jsonc/no-bigint-literals': 'error',
         'jsonc/no-binary-expression': 'error',
