@@ -138,3 +138,23 @@ const abc= {a,
 
   d
 }
+
+function foobar3(bar,
+  baz
+) {}
+
+var foobar4 = function(bar,
+  baz
+) {};
+
+var foobar5 = (
+  bar,
+  baz) => {};
+
+foo(bar,
+  baz);
+
+foo(
+    bar, qux,
+  baz
+);

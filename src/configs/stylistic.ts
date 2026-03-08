@@ -58,12 +58,6 @@ export function stylistic(options: StylisticConfigOptions & OptionsOverrides = {
       'style/brace-style': ['error', braceStyle, { allowSingleLine: true }],
       'style/no-extra-semi': 'error',
       'style/key-spacing': 'error',
-      'style/lines-between-class-members': ['error', {
-        enforce: [
-          { blankLine: 'always', prev: 'field', next: 'method' },
-          { blankLine: 'always', prev: 'method', next: 'method' },
-        ],
-      }, { exceptAfterOverload: true }],
       'style/no-multiple-empty-lines': ['error', { max: 1, maxBOF: 0, maxEOF: 0 }],
       'style/generator-star-spacing': ['error', { after: true, before: false }],
       'style/yield-star-spacing': ['error', { after: true, before: false }],
@@ -73,10 +67,17 @@ export function stylistic(options: StylisticConfigOptions & OptionsOverrides = {
       'style/no-multi-spaces': ['error', { exceptions: { Property: false } }],
       'style/object-curly-newline': ['error', { consistent: true, multiline: true }],
       'style/object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],
+      'style/function-paren-newline': ['error', 'multiline-arguments'],
       'style/implicit-arrow-linebreak': ['error', 'beside'],
+      'style/lines-between-class-members': ['error', {
+        enforce: [
+          { blankLine: 'always', prev: 'field', next: 'method' },
+          { blankLine: 'always', prev: 'method', next: 'method' },
+        ],
+      }, { exceptAfterOverload: true }],
 
       'antfu/consistent-chaining': 'error',
-      'antfu/consistent-list-newline': 'error',
+      'antfu/consistent-list-newline': ['error', { IfStatement: false }],
       'antfu/curly': 'error',
       'antfu/top-level-function': 'error',
 

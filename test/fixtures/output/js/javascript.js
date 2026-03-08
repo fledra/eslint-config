@@ -56,16 +56,7 @@ const x2 = (n) => n;
 x2 ('1');
 
 function r1(a, b, c, d, e, f, g, h) {
-  return {
-    a,
-    b,
-    c,
-    d,
-    e,
-    f,
-    g,
-    h,
-  };
+  return { a, b, c, d, e, f, g, h };
 }
 
 r1('xxx', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx');
@@ -130,3 +121,17 @@ if (a
 }
 
 const abc = { a, c, d };
+
+function foobar3(bar, baz) {}
+
+function foobar4(bar, baz) {}
+
+function foobar5(bar, baz) {}
+
+foo(bar, baz);
+
+foo(
+  bar,
+  qux,
+  baz,
+);
