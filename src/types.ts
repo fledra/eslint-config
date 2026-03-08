@@ -5,6 +5,7 @@ import type {
   ImportsOptions,
   JSDocOptions,
   JSONCOptions,
+  MarkdownOptions,
   StylisticConfigOptions,
   TypescriptOptions,
   UnicornOptions,
@@ -137,11 +138,11 @@ export interface ConfigOptions extends TypedFlatConfigItem, OptionsComponentExts
   toml?: boolean | OptionsOverrides;
 
   /**
-   * Enable linting for **code snippets** in Markdown.
+   * Enable linting for Markdown itself and **code snippets** in Markdown.
    *
    * @default true
    */
-  markdown?: boolean | OptionsOverrides;
+  markdown?: boolean | MarkdownOptions;
 
   /**
    * Enable JSDoc rules

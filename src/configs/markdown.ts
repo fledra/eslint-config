@@ -1,5 +1,3 @@
-import type { Linter } from 'eslint';
-
 import type { OptionsComponentExts, OptionsFiles, OptionsOverrides, TypedFlatConfigItem } from '../types';
 
 import pluginMarkdown from '@eslint/markdown';
@@ -7,48 +5,42 @@ import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors';
 
 import { GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN } from '../globs';
 
-const parserPlain: Linter.Parser = {
-  meta: {
-    name: 'parser-plain',
-  },
-  parseForESLint: (code: string) => ({
-    ast: {
-      body: [],
-      comments: [],
-      loc: { end: code.length, start: 0 },
-      range: [0, code.length],
-      tokens: [],
-      type: 'Program',
-    },
-    scopeManager: null,
-    services: { isPlain: true },
-    visitorKeys: {
-      Program: [],
-    },
-  }),
-};
+export interface MarkdownOptions extends OptionsFiles, OptionsOverrides, OptionsComponentExts {
+  /**
+   * Enable GitHub flavored markdown support.
+   *
+   * @default true
+   */
+  gfm?: boolean;
 
-export async function markdown(
-  options: OptionsFiles & OptionsComponentExts & OptionsOverrides = {},
-): Promise<TypedFlatConfigItem[]> {
+  /**
+   * An object containing the overrides for the configured rules for code blocks in markdown.
+   */
+  overridesCode?: TypedFlatConfigItem['rules'];
+}
+
+export async function markdown(options: MarkdownOptions = {}): Promise<TypedFlatConfigItem[]> {
   const {
+    files: _files = [],
     componentExts = [],
-    files = [GLOB_MARKDOWN],
-    overrides = {},
+    gfm = true,
+    overrides,
+    overridesCode,
   } = options;
+
+  const files = [GLOB_MARKDOWN, ..._files];
 
   return [
     {
       name: 'fledra/markdown/setup',
       plugins: {
-        pluginMarkdown,
+        markdown: pluginMarkdown,
       },
     },
     {
       name: 'fledra/markdown/processor',
       ignores: [GLOB_MARKDOWN_IN_MARKDOWN],
       files,
-
       // `eslint-plugin-markdown` only creates virtual files for code blocks,
       // but not the markdown file itself. Use `eslint-merge-processors` to
       // add a pass-through processor for the markdown file itself.
@@ -59,16 +51,32 @@ export async function markdown(
     },
     {
       name: 'fledra/markdown/parser',
-      languageOptions: {
-        parser: parserPlain,
-      },
+      language: gfm ? 'markdown/gfm' : 'markdown/commonmark',
       files,
     },
     {
-      files: [
-        GLOB_MARKDOWN_CODE,
-        ...componentExts.map((ext) => `${GLOB_MARKDOWN}/**/*.${ext}`),
-      ],
+      name: 'fledra/markdown/rules',
+      files,
+      rules: {
+        ...pluginMarkdown.configs.recommended.at(0)?.rules,
+        'markdown/fenced-code-language': 'off',
+        'markdown/no-missing-label-refs': 'off', // https://github.com/eslint/markdown/issues/294
+        ...overrides,
+      },
+    },
+    {
+      name: 'fledra/markdown/disables/markdown',
+      files,
+      rules: {
+        // Disable rules do not work with markdown sourcecode.
+        'no-irregular-whitespace': 'off',
+        'perfectionist/sort-exports': 'off',
+        'perfectionist/sort-imports': 'off',
+        'style/indent': 'off',
+      },
+    },
+    {
+      name: 'fledra/markdown/disables/code',
       languageOptions: {
         parserOptions: {
           ecmaFeatures: {
@@ -76,7 +84,10 @@ export async function markdown(
           },
         },
       },
-      name: 'fledra/markdown/disables',
+      files: [
+        GLOB_MARKDOWN_CODE,
+        ...componentExts.map((ext) => `${GLOB_MARKDOWN}/**/*.${ext}`),
+      ],
       rules: {
         'no-alert': 'off',
         'no-console': 'off',
@@ -105,7 +116,7 @@ export async function markdown(
         'unused-imports/no-unused-imports': 'off',
         'unused-imports/no-unused-vars': 'off',
 
-        ...overrides,
+        ...overridesCode,
       },
     },
   ];
