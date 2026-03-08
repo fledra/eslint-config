@@ -3,6 +3,7 @@ import type { Linter } from 'eslint';
 import type {
   GitignoreOptions,
   ImportsOptions,
+  JSDocOptions,
   JSONCOptions,
   StylisticConfigOptions,
   TypescriptOptions,
@@ -141,6 +142,13 @@ export interface ConfigOptions extends TypedFlatConfigItem, OptionsComponentExts
    * @default true
    */
   markdown?: boolean | OptionsOverrides;
+
+  /**
+   * Enable JSDoc rules
+   *
+   * @default true
+   */
+  jsdoc?: boolean | JSDocOptions;
 
   /**
    * Enable stylistic rules.

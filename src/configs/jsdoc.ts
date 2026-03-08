@@ -2,7 +2,18 @@ import type { TypedFlatConfigItem } from '../types';
 
 import pluginJsdoc from 'eslint-plugin-jsdoc';
 
-export function jsdoc(stylistic = true): TypedFlatConfigItem {
+export interface JSDocOptions {
+  /**
+   * @default true
+   */
+  stylistic?: boolean;
+}
+
+export function jsdoc(options: JSDocOptions = {}): TypedFlatConfigItem {
+  const {
+    stylistic = true,
+  } = options;
+
   return {
     name: 'fledra/jsdoc/rules',
     plugins: {
