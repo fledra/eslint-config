@@ -117,6 +117,14 @@ export interface ConfigOptions extends TypedFlatConfigItem, OptionsComponentExts
   imports?: boolean | ImportsOptions;
 
   /**
+   * Enable perfectionist plugin for props and items sorting.
+   *
+   * @see https://github.com/azat-io/eslint-plugin-perfectionist
+   * @default true
+   */
+  perfectionist?: boolean | OptionsOverrides;
+
+  /**
    * Options for eslint-plugin-unicorn.
    *
    * @default true

@@ -71,9 +71,10 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     imports: enableImports = true,
     unicorn: enableUnicorn = true,
     markdown: enableMarkdown = true,
-    typescript: enableTypescript = isPackageExists('typescript'),
     toml: enableToml = true,
     yaml: enableYaml = true,
+    perfectionist: enablePerfectionist = true,
+    typescript: enableTypescript = isPackageExists('typescript'),
     vue: enableVue = VuePackages.some((p) => isPackageExists(p)),
   } = options;
 
@@ -105,8 +106,12 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     ignores(optionsIgnores),
     javascript({ overrides: getOverrides(options, 'javascript') }),
     comments(),
-    perfectionist(),
   );
+
+  if (enablePerfectionist) {
+    const perfectionistOptions = resolveSubOptions(options, 'perfectionist');
+    configs.push(perfectionist(perfectionistOptions));
+  }
 
   if (enableNode) {
     const nodeOptions = resolveSubOptions(options, 'node');
