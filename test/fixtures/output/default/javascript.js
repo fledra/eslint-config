@@ -56,7 +56,16 @@ const x2 = (n) => n;
 x2 ('1');
 
 function r1(a, b, c, d, e, f, g, h) {
-  return { a, b, c, d, e, f, g, h };
+  return {
+    a,
+    b,
+    c,
+    d,
+    e,
+    f,
+    g,
+    h,
+  };
 }
 
 r1('xxx', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx');
