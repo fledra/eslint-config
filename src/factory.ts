@@ -67,6 +67,7 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     jsx: enableJsx = false,
     jsdoc: enableJSDoc = true,
     jsonc: enableJSONC = true,
+    node: enableNode = true,
     imports: enableImports = true,
     unicorn: enableUnicorn = true,
     markdown: enableMarkdown = true,
@@ -104,9 +105,13 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     ignores(optionsIgnores),
     javascript({ overrides: getOverrides(options, 'javascript') }),
     comments(),
-    node(),
     perfectionist(),
   );
+
+  if (enableNode) {
+    const nodeOptions = resolveSubOptions(options, 'node');
+    configs.push(node(nodeOptions));
+  }
 
   if (enableJSDoc) {
     const jsdocOptions = resolveSubOptions(options, 'jsdoc');

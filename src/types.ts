@@ -103,6 +103,13 @@ export interface ConfigOptions extends TypedFlatConfigItem, OptionsComponentExts
   vue?: boolean | VueOptions;
 
   /**
+   * Enable Node.js rules
+   *
+   * @default true
+   */
+  node?: boolean | OptionsOverrides;
+
+  /**
    * Options for eslint-plugin-import-lite.
    *
    * @default true
