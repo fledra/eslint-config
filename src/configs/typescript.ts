@@ -41,23 +41,21 @@ export interface TypeScriptParserOptions {
   ignoresTypeAware?: string[];
 }
 
-export type TypescriptOptions = (TypeScriptWithTypesOptions & OptionsOverrides) | (TypeScriptParserOptions & OptionsOverrides);
+export type TypescriptOptions = OptionsFiles
+  & OptionsOverrides
+  & OptionsComponentExts
+  & TypeScriptWithTypesOptions
+  & TypeScriptParserOptions;
 
-export function typescript(
-  options: OptionsFiles & OptionsOverrides & OptionsComponentExts & TypeScriptWithTypesOptions & TypeScriptParserOptions = {},
-): TypedFlatConfigItem[] {
+export function typescript(options: TypescriptOptions = {}): TypedFlatConfigItem[] {
   const {
     componentExts = [],
-    overrides = {},
-    overridesTypeAware = {},
     parserOptions = {},
+    overrides,
+    overridesTypeAware,
   } = options;
 
-  let files = [
-    GLOB_TS,
-    GLOB_TSX,
-    ...componentExts.map((ext) => `**/*.${ext}`),
-  ];
+  let files = [GLOB_TS, GLOB_TSX, ...componentExts.map((ext) => `**/*.${ext}`)];
 
   if (options.files) {
     files = files.concat(options.files);
@@ -124,14 +122,8 @@ export function typescript(
       },
     },
     ...(isTypeAware
-      ? [
-          makeParser(false, files),
-          makeParser(true, filesTypeAware, ignoresTypeAware),
-        ]
-      : [
-          makeParser(false, files),
-        ]
-    ),
+      ? [makeParser(false, files), makeParser(true, filesTypeAware, ignoresTypeAware)]
+      : [makeParser(false, files)]),
     {
       name: 'fledra/typescript/rules',
       files,
@@ -145,14 +137,11 @@ export function typescript(
 
         'ts/ban-ts-comment': ['error', { 'ts-expect-error': 'allow-with-description' }],
         'ts/consistent-type-definitions': ['error', 'interface'],
-        'ts/consistent-type-imports': [
-          'error',
-          {
-            disallowTypeAnnotations: false,
-            fixStyle: 'separate-type-imports',
-            prefer: 'type-imports',
-          },
-        ],
+        'ts/consistent-type-imports': ['error', {
+          disallowTypeAnnotations: false,
+          fixStyle: 'separate-type-imports',
+          prefer: 'type-imports',
+        }],
         'ts/method-signature-style': ['error', 'property'],
         'ts/no-dupe-class-members': 'error',
         'ts/no-empty-object-type': ['error', { allowInterfaces: 'always' }],
@@ -161,14 +150,11 @@ export function typescript(
         'ts/no-invalid-void-type': 'off',
         'ts/no-redeclare': ['error', { builtinGlobals: false }],
         'ts/no-require-imports': 'error',
-        'ts/no-unused-expressions': [
-          'error',
-          {
-            allowShortCircuit: true,
-            allowTaggedTemplates: true,
-            allowTernary: true,
-          },
-        ],
+        'ts/no-unused-expressions': ['error', {
+          allowShortCircuit: true,
+          allowTaggedTemplates: true,
+          allowTernary: true,
+        }],
         'ts/no-unused-vars': ['error', {
           args: 'after-used',
           argsIgnorePattern: '^_',
@@ -178,7 +164,11 @@ export function typescript(
           varsIgnorePattern: '^_',
           ignoreRestSiblings: true,
         }],
-        'ts/no-use-before-define': ['error', { classes: false, functions: false, variables: true }],
+        'ts/no-use-before-define': ['error', {
+          classes: false,
+          functions: false,
+          variables: true,
+        }],
         'ts/no-wrapper-object-types': 'error',
         'ts/unified-signatures': 'off',
 
