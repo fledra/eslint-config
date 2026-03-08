@@ -4,7 +4,7 @@ import pluginUnusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 
 export function javascript(options: OptionsOverrides = {}): TypedFlatConfigItem[] {
-  const { overrides = {} } = options;
+  const { overrides } = options;
 
   return [
     {

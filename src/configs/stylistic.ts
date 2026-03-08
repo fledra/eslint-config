@@ -28,7 +28,7 @@ export function stylistic(options: StylisticConfigOptions & OptionsOverrides = {
     commaDangle,
     blockSpacing,
     braceStyle,
-    overrides = {},
+    overrides,
   } = {
     ...defaultStylisticOptions,
     ...options,

@@ -1,7 +1,6 @@
-import type { Linter } from 'eslint';
 import type { ResolvableFlatConfig } from 'eslint-flat-config-utils';
 
-import type { ConfigNames, RuleOptions } from './typegen';
+import type { ConfigNames } from './typegen';
 import type { Awaitable, ConfigOptions, ResolvedOptions, TypedFlatConfigItem } from './types';
 
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
@@ -48,20 +47,10 @@ export function resolveSubOptions<T extends object, K extends keyof T>(options: 
   return options[key] as ResolvedOptions<T[K]>;
 }
 
-export function getOverrides<K extends keyof ConfigOptions>(options: ConfigOptions, key: K): Partial<Linter.RulesRecord & RuleOptions> {
-  const subOptions = resolveSubOptions(options, key);
-
-  if ('overrides' in subOptions) {
-    return subOptions.overrides;
-  }
-
-  return {};
-}
-
 export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableFlatConfig<TypedFlatConfigItem>[]) {
   const {
     componentExts = [],
-    ignores: optionsIgnores,
+    ignores: ignoreFiles,
     renamePlugins = true,
     gitignore: enableGitignore = true,
     jsx: enableJsx = false,
@@ -95,16 +84,13 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
   }
 
   if (enableGitignore) {
-    if (typeof enableGitignore === 'boolean') {
-      configs.push(gitignore());
-    } else {
-      configs.push(gitignore(enableGitignore));
-    }
+    const gitignoreOptions = resolveSubOptions(options, 'gitignore');
+    configs.push(gitignore(gitignoreOptions));
   }
 
   configs.push(
-    ignores(optionsIgnores),
-    javascript({ overrides: getOverrides(options, 'javascript') }),
+    ignores(ignoreFiles),
+    javascript(resolveSubOptions(options, 'javascript')),
     comments(),
   );
 
@@ -134,12 +120,8 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
   }
 
   if (stylisticOptions) {
-    configs.push(
-      stylistic({
-        ...stylisticOptions,
-        overrides: getOverrides(options, 'stylistic'),
-      }),
-    );
+    const stylisticOptions = resolveSubOptions(options, 'stylistic');
+    configs.push(stylistic(stylisticOptions));
   }
 
   if (enableTypescript) {
@@ -148,19 +130,19 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
       typescript({
         ...typescriptOptions,
         componentExts: Array.from(new Set(componentExts)),
-        overrides: getOverrides(options, 'typescript'),
       }),
     );
   }
 
   if (enableVue) {
     const vueOptions = resolveSubOptions(options, 'vue');
-    configs.push(vue({
-      ...vueOptions,
-      overrides: getOverrides(options, 'vue'),
-      stylistic: stylisticOptions,
-      typescript: !!enableTypescript,
-    }));
+    configs.push(
+      vue({
+        ...vueOptions,
+        stylistic: stylisticOptions,
+        typescript: !!enableTypescript,
+      }),
+    );
   }
 
   if (enableJSONC) {
