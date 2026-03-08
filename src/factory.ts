@@ -41,16 +41,14 @@ const defaultPluginRenameMapping = {
 const VuePackages = ['vue', 'nuxt'];
 
 export function resolveSubOptions<T extends object, K extends keyof T>(options: T, key: K) {
-  if (typeof options[key] === 'boolean' || !options[key])
+  if (typeof options[key] === 'boolean' || !options[key]) {
     return {} as never;
+  }
 
   return options[key] as ResolvedOptions<T[K]>;
 }
 
-export function getOverrides<K extends keyof ConfigOptions>(
-  options: ConfigOptions,
-  key: K,
-): Partial<Linter.RulesRecord & RuleOptions> {
+export function getOverrides<K extends keyof ConfigOptions>(options: ConfigOptions, key: K): Partial<Linter.RulesRecord & RuleOptions> {
   const subOptions = resolveSubOptions(options, key);
 
   if ('overrides' in subOptions) {

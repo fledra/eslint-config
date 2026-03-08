@@ -1,7 +1,14 @@
-import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { Linter } from 'eslint';
 
-import type { GitignoreOptions, ImportsOptions, JSONCOptions, TypescriptOptions, UnicornOptions, VueOptions } from './configs';
+import type {
+  GitignoreOptions,
+  ImportsOptions,
+  JSONCOptions,
+  StylisticConfigOptions,
+  TypescriptOptions,
+  UnicornOptions,
+  VueOptions,
+} from './configs';
 import type { RuleOptions } from './typegen';
 
 export type Awaitable<T> = T | Promise<T>;
@@ -141,5 +148,5 @@ export interface ConfigOptions extends TypedFlatConfigItem, OptionsComponentExts
    * @see https://eslint.style/
    * @default true
    */
-  stylistic?: boolean | (StylisticCustomizeOptions & OptionsOverrides);
+  stylistic?: boolean | (StylisticConfigOptions & OptionsOverrides);
 }

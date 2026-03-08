@@ -5,7 +5,9 @@ import type { OptionsOverrides, TypedFlatConfigItem } from '../types';
 import pluginStylistic from '@stylistic/eslint-plugin';
 import pluginAntfu from 'eslint-plugin-antfu';
 
-export const defaultStylisticOptions: StylisticCustomizeOptions = {
+export type StylisticConfigOptions = Omit<StylisticCustomizeOptions, 'pluginName' | 'severity'>;
+
+export const defaultStylisticOptions: StylisticConfigOptions = {
   indent: 2,
   semi: true,
   jsx: false,
@@ -16,7 +18,7 @@ export const defaultStylisticOptions: StylisticCustomizeOptions = {
   commaDangle: 'always-multiline',
 };
 
-export function stylistic(options: StylisticCustomizeOptions & OptionsOverrides = {}): TypedFlatConfigItem {
+export function stylistic(options: StylisticConfigOptions & OptionsOverrides = {}): TypedFlatConfigItem {
   const {
     indent,
     semi,

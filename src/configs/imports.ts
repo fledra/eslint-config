@@ -4,11 +4,17 @@ import pluginAntfu from 'eslint-plugin-antfu';
 import pluginImport from 'eslint-plugin-import-lite';
 
 export interface ImportsOptions extends OptionsOverrides {
+  /**
+   * @default true
+   */
   stylistic?: boolean;
 }
 
 export function imports(options: ImportsOptions = {}): TypedFlatConfigItem {
-  const { overrides, stylistic } = options;
+  const {
+    overrides,
+    stylistic = true,
+  } = options;
 
   return {
     name: 'fledra/imports/rules',
