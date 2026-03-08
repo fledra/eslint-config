@@ -1,9 +1,15 @@
-import type { TypedFlatConfigItem } from '../types';
+import type { OptionsOverrides, TypedFlatConfigItem } from '../types';
 
 import pluginAntfu from 'eslint-plugin-antfu';
 import pluginImport from 'eslint-plugin-import-lite';
 
-export function imports(stylistic = true): TypedFlatConfigItem {
+export interface ImportsOptions extends OptionsOverrides {
+  stylistic?: boolean;
+}
+
+export function imports(options: ImportsOptions = {}): TypedFlatConfigItem {
+  const { overrides, stylistic } = options;
+
   return {
     name: 'fledra/imports/rules',
     plugins: {
@@ -23,6 +29,8 @@ export function imports(stylistic = true): TypedFlatConfigItem {
       ...(stylistic && {
         'import/newline-after-import': ['error', { count: 1 }],
       }),
+
+      ...overrides,
     },
   };
 }

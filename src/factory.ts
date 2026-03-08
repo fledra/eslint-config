@@ -68,6 +68,7 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     gitignore: enableGitignore = true,
     jsx: enableJsx = false,
     jsonc: enableJSONC = true,
+    imports: enableImports = true,
     unicorn: enableUnicorn = true,
     markdown: enableMarkdown = true,
     typescript: enableTypescript = isPackageExists('typescript'),
@@ -106,9 +107,13 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     comments(),
     node(),
     jsdoc(!!stylisticOptions),
-    imports(!!stylisticOptions),
     perfectionist(),
   );
+
+  if (enableImports) {
+    const importsOptions = resolveSubOptions(options, 'imports');
+    configs.push(imports(importsOptions));
+  }
 
   if (enableUnicorn) {
     const unicornOptions = resolveSubOptions(options, 'unicorn');

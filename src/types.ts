@@ -1,7 +1,7 @@
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { Linter } from 'eslint';
 
-import type { GitignoreOptions, JSONCOptions, TypescriptOptions, UnicornOptions, VueOptions } from './configs';
+import type { GitignoreOptions, ImportsOptions, JSONCOptions, TypescriptOptions, UnicornOptions, VueOptions } from './configs';
 import type { RuleOptions } from './typegen';
 
 export type Awaitable<T> = T | Promise<T>;
@@ -92,6 +92,13 @@ export interface ConfigOptions extends TypedFlatConfigItem, OptionsComponentExts
    * @default auto-detect based on the dependencies
    */
   vue?: boolean | VueOptions;
+
+  /**
+   * Options for eslint-plugin-import-lite.
+   *
+   * @default true
+   */
+  imports?: boolean | ImportsOptions;
 
   /**
    * Options for eslint-plugin-unicorn.
