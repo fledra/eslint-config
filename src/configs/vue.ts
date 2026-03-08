@@ -1,7 +1,7 @@
-import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { Options as VueBlocksOptions } from 'eslint-processor-vue-blocks';
 
 import type { OptionsFiles, OptionsOverrides, TypedFlatConfigItem } from '../types';
+import type { StylisticConfigOptions } from './stylistic';
 
 import { mergeProcessors } from 'eslint-merge-processors';
 import pluginVue from 'eslint-plugin-vue';
@@ -29,7 +29,7 @@ export interface VueOptions extends OptionsOverrides, OptionsFiles {
 
   jsx?: boolean;
   typescript?: boolean;
-  stylistic?: boolean | StylisticCustomizeOptions;
+  stylistic?: boolean | StylisticConfigOptions;
 }
 
 export async function vue(options: VueOptions = {}): Promise<TypedFlatConfigItem[]> {
@@ -49,7 +49,7 @@ export async function vue(options: VueOptions = {}): Promise<TypedFlatConfigItem
     braceStyle,
   } = {
     ...defaultStylisticOptions,
-    ...(typeof stylistic === 'boolean' ? {} : stylistic),
+    ...(typeof stylistic === 'object' && stylistic),
   };
 
   return [

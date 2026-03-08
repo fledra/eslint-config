@@ -1,13 +1,12 @@
-import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
-
 import type { OptionsFiles, OptionsOverrides, TypedFlatConfigItem } from '../types';
+import type { StylisticConfigOptions } from './stylistic';
 
 import { GLOB_TOML } from '../globs';
 import { interopDefault } from '../utils';
 import { defaultStylisticOptions } from './stylistic';
 
 export interface TOMLOptions extends OptionsOverrides, OptionsFiles {
-  stylistic?: boolean | StylisticCustomizeOptions;
+  stylistic?: boolean | Pick<StylisticConfigOptions, 'indent'>;
 }
 
 export async function toml(options: TOMLOptions = {}): Promise<TypedFlatConfigItem[]> {
@@ -19,7 +18,7 @@ export async function toml(options: TOMLOptions = {}): Promise<TypedFlatConfigIt
 
   const { indent } = {
     ...defaultStylisticOptions,
-    ...(typeof stylistic === 'boolean' ? {} : stylistic),
+    ...(typeof stylistic === 'object' && stylistic),
   };
 
   const [

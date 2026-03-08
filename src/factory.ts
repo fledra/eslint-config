@@ -8,6 +8,7 @@ import { isPackageExists } from 'local-pkg';
 
 import {
   comments,
+  defaultStylisticOptions,
   disables,
   gitignore,
   ignores,
@@ -44,7 +45,20 @@ export function resolveSubOptions<T extends object, K extends keyof T>(options: 
     return {} as never;
   }
 
-  return options[key] as ResolvedOptions<T[K]>;
+  const subOptions = options[key] as ResolvedOptions<T[K]>;
+  const stylisticOptions = defaultStylisticOptions;
+
+  if ('stylistic' in options) {
+    Object.assign(stylisticOptions, options.stylistic);
+  }
+
+  if ('stylistic' in subOptions) {
+    Object.assign(stylisticOptions, subOptions.stylistic);
+  }
+
+  stylisticOptions.jsx = ('jsx' in stylisticOptions);
+
+  return subOptions;
 }
 
 export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableFlatConfig<TypedFlatConfigItem>[]) {
@@ -53,7 +67,6 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     ignores: ignoreFiles,
     renamePlugins = true,
     gitignore: enableGitignore = true,
-    jsx: enableJsx = false,
     jsdoc: enableJSDoc = true,
     jsonc: enableJSONC = true,
     node: enableNode = true,
@@ -62,22 +75,13 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     markdown: enableMarkdown = true,
     toml: enableToml = true,
     yaml: enableYaml = true,
+    stylistic: enableStylistic = true,
     perfectionist: enablePerfectionist = true,
     typescript: enableTypescript = isPackageExists('typescript'),
     vue: enableVue = VuePackages.some((p) => isPackageExists(p)),
   } = options;
 
   const configs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[] = [];
-
-  const stylisticOptions = options.stylistic === false
-    ? false
-    : typeof options.stylistic === 'object'
-      ? options.stylistic
-      : {};
-
-  if (stylisticOptions && !('jsx' in stylisticOptions)) {
-    stylisticOptions.jsx = enableJsx;
-  }
 
   if (enableVue) {
     componentExts.push('vue');
@@ -119,7 +123,7 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     configs.push(unicorn(unicornOptions));
   }
 
-  if (stylisticOptions) {
+  if (enableStylistic) {
     const stylisticOptions = resolveSubOptions(options, 'stylistic');
     configs.push(stylistic(stylisticOptions));
   }
@@ -139,7 +143,6 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
     configs.push(
       vue({
         ...vueOptions,
-        stylistic: stylisticOptions,
         typescript: !!enableTypescript,
       }),
     );
@@ -175,25 +178,19 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
 
   if (enableYaml) {
     const yamlOptions = resolveSubOptions(options, 'yaml');
-    configs.push(yaml({
-      ...yamlOptions,
-      stylistic: stylisticOptions,
-    }));
+    configs.push(yaml(yamlOptions));
   }
 
   if (enableToml) {
     const tomlOptions = resolveSubOptions(options, 'toml');
-    configs.push(toml({
-      ...tomlOptions,
-      stylistic: stylisticOptions,
-    }));
+    configs.push(toml(tomlOptions));
   }
 
   if (enableMarkdown) {
     const markdownOptions = resolveSubOptions(options, 'markdown');
     configs.push(markdown({
       ...markdownOptions,
-      componentExts,
+      componentExts: Array.from(new Set(componentExts)),
     }));
   }
 

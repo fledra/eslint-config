@@ -1,13 +1,12 @@
-import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
-
 import type { OptionsFiles, OptionsOverrides, TypedFlatConfigItem } from '../types';
+import type { StylisticConfigOptions } from './stylistic';
 
 import { GLOB_YAML } from '../globs';
 import { interopDefault } from '../utils';
 import { defaultStylisticOptions } from './stylistic';
 
 export interface YAMLOptions extends OptionsOverrides, OptionsFiles {
-  stylistic?: boolean | StylisticCustomizeOptions;
+  stylistic?: boolean | Pick<StylisticConfigOptions, 'indent' | 'quotes'>;
 }
 
 export async function yaml(options: YAMLOptions = {}): Promise<TypedFlatConfigItem[]> {
@@ -19,7 +18,7 @@ export async function yaml(options: YAMLOptions = {}): Promise<TypedFlatConfigIt
 
   const { indent, quotes } = {
     ...defaultStylisticOptions,
-    ...(typeof stylistic === 'boolean' ? {} : stylistic),
+    ...(typeof stylistic === 'object' && stylistic),
   };
 
   const [
