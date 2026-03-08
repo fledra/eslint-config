@@ -6,9 +6,7 @@
 
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-
-    "types": ["vitest/globals"]
+    "skipLibCheck": true
   },
   "include": ["**/*.ts"],
   "exclude": ["./fixtures/**/*"]

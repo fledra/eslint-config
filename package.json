@@ -23,7 +23,7 @@
   "packageManager": "pnpm@10.18.0",
   "scripts": {
     "prepare": "husky",
-    "build": "pnpm generate && tsup --clean --dts",
+    "build": "pnpm typegen && tsup --clean --dts",
     "dev": "pnpx @eslint/config-inspector --config eslint.config.ts",
     "test": "vitest --run",
     "test:dev": "vitest",
