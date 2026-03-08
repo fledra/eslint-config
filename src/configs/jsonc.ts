@@ -1,9 +1,9 @@
-import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
-
 import type { OptionsFiles, OptionsOverrides, TypedFlatConfigItem } from '../types';
+import type { StylisticConfigOptions } from './stylistic';
+
+import pluginJsonc from 'eslint-plugin-jsonc';
 
 import { GLOB_JSON, GLOB_JSON5, GLOB_JSONC } from '../globs';
-import { interopDefault } from '../utils';
 import { defaultStylisticOptions } from './stylistic';
 
 interface JSONCSortableOptions {
@@ -21,28 +21,23 @@ export interface JSONCOptions extends OptionsFiles, OptionsOverrides {
    */
   sort?: boolean | JSONCSortableOptions;
 
-  stylistic?: boolean | StylisticCustomizeOptions;
+  /**
+   * @default true
+   */
+  stylistic?: boolean | Pick<StylisticConfigOptions, 'indent'>;
 }
 
-export async function jsonc(options: JSONCOptions = {}): Promise<TypedFlatConfigItem[]> {
+export async function jsonc(options: Omit<JSONCOptions, 'sort'> = {}): Promise<TypedFlatConfigItem[]> {
   const {
     files = [GLOB_JSON, GLOB_JSON5, GLOB_JSONC],
-    overrides = {},
     stylistic = true,
+    overrides,
   } = options;
 
   const { indent } = {
     ...defaultStylisticOptions,
-    ...(typeof stylistic === 'boolean' ? {} : stylistic),
+    ...(typeof stylistic === 'object' && stylistic),
   };
-
-  const [
-    pluginJsonc,
-    parserJsonc,
-  ] = await Promise.all([
-    interopDefault(import('eslint-plugin-jsonc')),
-    interopDefault(import('jsonc-eslint-parser')),
-  ]);
 
   return [
     {
@@ -53,9 +48,7 @@ export async function jsonc(options: JSONCOptions = {}): Promise<TypedFlatConfig
     },
     {
       name: 'fledra/jsonc/rules',
-      languageOptions: {
-        parser: parserJsonc,
-      },
+      language: 'jsonc/x',
       files,
       rules: {
         'jsonc/array-bracket-spacing': ['error', 'never'],

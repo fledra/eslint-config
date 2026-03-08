@@ -159,12 +159,7 @@ export function fledra(options: ConfigOptions = {}, ...otherConfigs: ResolvableF
       ...jsoncOptions
     } = resolveSubOptions(options, 'jsonc');
 
-    configs.push(
-      jsonc({
-        ...jsoncOptions,
-        stylistic: stylisticOptions,
-      }),
-    );
+    configs.push(jsonc(jsoncOptions));
 
     if (sorterOptions) {
       if (typeof sorterOptions === 'boolean') {
