@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/fledra/eslint-config/issues"
   },
-  "packageManager": "pnpm@10.18.0",
+  "packageManager": "pnpm@10.30.0",
   "scripts": {
     "prepare": "husky",
     "build": "pnpm typegen && tsup --clean --dts",
@@ -81,6 +81,6 @@
   },
   "changelog": {
     "output": false,
-    "hideAuthorEmail": true
+    "noAuthors": true
   }
 }

@@ -15,19 +15,24 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Setup Node LTS
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: lts/*
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Install dependencies
         run: pnpm install
+
+      - name: Build package
+        run: pnpm build
 
       - name: Generate release
         run: pnpx changelogen@latest gh release
@@ -35,4 +40,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Publish to NPM
-        run: pnpm publish --provenance --access public --no-git-checks
+        run: npm publish --provenance --access public --no-git-checks
