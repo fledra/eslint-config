@@ -57,6 +57,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Generate types
+        run: pnpm typegen
+
       - name: Check types
         run: pnpm typecheck
 
