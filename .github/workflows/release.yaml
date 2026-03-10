@@ -35,9 +35,9 @@ jobs:
         run: pnpm build
 
       - name: Generate release
-        run: pnpx changelogen@latest gh release
+        run: pnpx changelogithub
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Publish to NPM
         run: npm publish --provenance --access public --no-git-checks
